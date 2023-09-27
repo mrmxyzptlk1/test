@@ -23,6 +23,8 @@ jobs:
         id: branch-deploy
         with:
           trigger: ".deploy"
+          environment_targets: fluent-bit-dev
+          sticky_locks: "true"
 
       # Run your deployment logic for your project here - examples seen below
 
