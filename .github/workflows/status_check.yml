@@ -1,0 +1,12 @@
+name: "branch deploy demo"
+
+# The workflow to execute on is comments that are newly created
+on:
+  pull_request:
+    types: [created, edited]
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "check"
