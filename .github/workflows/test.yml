@@ -19,6 +19,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Report tests check
+        if: ${{ github.event.inputs.used-branch && steps.tests-step.outcome }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.checks.create({
+              name: 'Status check one',
+              head_sha: '${{ github.sha }}',
+              status: 'completed',
+              conclusion: 'skipped',
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
+
       - name: Create report file
         run: date +%s > report.txt
 
