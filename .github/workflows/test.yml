@@ -41,7 +41,7 @@ jobs:
           script: |
             github.checks.create({
               name: 'Status check one',
-              head_sha: '${{ github.sha }}',
+              head_sha: '${{ steps.get-sha.outputs.sha }}',
               status: 'completed',
               conclusion: 'success',
               owner: context.repo.owner,
