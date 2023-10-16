@@ -19,20 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: get sha from PR number and save output
-        id: get-sha
-        uses: actions/github-script@v3
+      - name: Create report file
+        run: date +%s > report.txt
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        id: commit
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            console.log('PR number: ' + ${{ github.event.issue.number }})
-            const pr = await github.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: ${{ github.event.issue.number }}
-            })
-            console.log('PR Head sha: ' + pr.data.head.sha)
-            core.setOutput('sha', pr.data.head.sha)
+          branch: tmp/test
+          create_branch: true
 
       - name: Report tests check
         uses: actions/github-script@v3
@@ -41,14 +35,15 @@ jobs:
           script: |
             github.checks.create({
               name: 'Status check one',
-              head_sha: '${{ steps.get-sha.outputs.sha }}',
+              head_sha: '${{ steps.commit.outputs.commit_hash }}',
               status: 'completed',
               conclusion: 'success',
               owner: context.repo.owner,
               repo: context.repo.repo
             })
 
-      - name: Create report file
-        run: date +%s > report.txt
-
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Push commit
+        run: |
+          git pull origin master
+          git merge tmp/test
+          git push
