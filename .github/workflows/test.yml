@@ -42,8 +42,16 @@ jobs:
       #        repo: context.repo.repo
       #      })
 
-      - name: Push commit
-        run: |
-          git pull
-          git merge tmp/test
-          git push
+      #- name: Push commit
+      #  run: |
+      #    git pull
+      #    git merge tmp/test
+      #    git push
+
+      - name: Merge
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: tmp/test
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
