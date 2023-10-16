@@ -28,7 +28,7 @@ jobs:
               name: 'Status check one',
               head_sha: '${{ github.sha }}',
               status: 'completed',
-              conclusion: 'skipped',
+              conclusion: 'success',
               owner: context.repo.owner,
               repo: context.repo.repo
             })
