@@ -1,0 +1,29 @@
+name: Auto merge
+
+on:
+  pull_request:
+    types: [auto_merge_enabled, auto_merge_disabled]
+    #paths:
+    #  - 'folder1/**'
+    #  - 'folder2/**'
+
+jobs:
+  detect_change:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.repos.createOrUpdateEnvironment({
+              owner: 'mrmxyzptlk1',
+              repo: 'test',
+              environment_name: 'PR #2',
+              wait_timer: 1
+            })
+
+  auto_merge:
+    needs: detect_change
+    runs-on: ubuntu-latest
+    environment: 'PR #2'
+    steps:
+      - run: echo "auto_merge!"
