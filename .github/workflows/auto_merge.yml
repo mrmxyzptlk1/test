@@ -19,7 +19,8 @@ jobs:
               owner: 'mrmxyzptlk1',
               repo: 'test',
               environment_name: 'PR #2',
-              wait_timer: 1
+              wait_timer: 1,
+              prevent_self_review: false
             })
 
   auto_merge:
