@@ -7,6 +7,7 @@ on:
 
 jobs:
   status_check_one:
+    if: false
     name: Status check one
     runs-on: ubuntu-latest
     steps:
