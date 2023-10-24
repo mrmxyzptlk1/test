@@ -24,5 +24,5 @@ jobs:
               owner: 'mrmxyzptlk1',
               repo: 'test',
               workflow_id: 'on_workflow_dispatch.yml',
-              ref: main
+              ref: mrmxyzptlk1/main
             })
