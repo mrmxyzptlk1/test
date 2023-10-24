@@ -5,6 +5,7 @@ on:
 
 jobs:
   status_check_one:
+    if: github.event.action != 'synchronize'
     name: Status check one
     runs-on: ubuntu-latest
     steps:

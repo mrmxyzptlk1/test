@@ -7,5 +7,4 @@ on:
 
 jobs:
   status_check_one:
-    if: github.event.action != 'synchronize'
     uses: ./.github/workflows/on_workflow_call.yml
