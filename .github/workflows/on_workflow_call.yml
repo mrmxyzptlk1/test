@@ -1,0 +1,12 @@
+name: "Called workflow"
+
+on:
+  workflow_call:
+
+jobs:
+  status_check_one:
+    name: Status check one
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "check"
+  

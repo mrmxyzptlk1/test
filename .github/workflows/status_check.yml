@@ -3,11 +3,9 @@ name: "Status check"
 # The workflow to execute on is comments that are newly created
 on:
   pull_request:
-    types: [created, edited]
+    types: [created, edited, synchronize]
 
 jobs:
   status_check_one:
-    name: Status check one
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "check"
+    if: github.event.action != 'synchronize'
+    uses: ./.github/workflows/on_workflow_call.yml
