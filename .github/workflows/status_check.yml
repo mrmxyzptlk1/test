@@ -7,4 +7,7 @@ on:
 
 jobs:
   status_check_one:
-    uses: ./.github/workflows/on_workflow_call.yml
+    name: Status check one
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
