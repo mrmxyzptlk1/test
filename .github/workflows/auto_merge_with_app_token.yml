@@ -1,0 +1,28 @@
+name: Calling workflow Auto merge
+
+on:
+  pull_request:
+    types: [auto_merge_enabled, auto_merge_disabled]
+
+jobs:
+  call_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v2
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          permissions: "actions:write"
+    
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.get_workflow_token.outputs.token }}
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: 'mrmxyzptlk1',
+              repo: 'test',
+              workflow_id: 'on_workflow_dispatch.yml',
+              ref: main
+            })
