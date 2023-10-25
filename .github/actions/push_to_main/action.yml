@@ -9,3 +9,5 @@ runs:
     - name: Step 2
       shell: bash
       run: echo "test"
+    - name: Run action
+      uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
