@@ -1,13 +1,14 @@
-name: "Status check"
+name: "Run composite action"
 
-# The workflow to execute on is comments that are newly created
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+  push:
 
 jobs:
-  status_check_one:
-    name: Status check one
+  composite_action:
+    name: Composite action
     runs-on: ubuntu-latest
     steps:
-      - run: exit 1
+      - uses: actions/checkout@v3
+
+      - name: Invoke my action
+        uses: ./.github/composite_actions/push_to_main
