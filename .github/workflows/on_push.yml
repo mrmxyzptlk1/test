@@ -12,3 +12,5 @@ jobs:
 
       - name: Invoke my action
         uses: ./.github/actions/push_to_main
+        with:
+          parameter1: 'true'
