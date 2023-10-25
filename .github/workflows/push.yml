@@ -14,8 +14,3 @@ jobs:
         with:
           application_id: ${{ secrets.APPLICATION_ID }}
           application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
-          # permissions: "actions:write"
-    
-      - name: Check token scope
-        run: |
-          curl -sS -f -I -H "Authorization: token ${{ steps.get_workflow_token.outputs.token }}" https://api.github.com | grep -i x-oauth-scopes
