@@ -1,5 +1,11 @@
 name: 'Hello World'
 description: 'Greet someone'
+
+inputs:
+  parameter1:  # id of input
+    description: 'Description'
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -7,6 +13,7 @@ runs:
       shell: bash
       run: echo "test"
     - name: Step 2
+      if: ${{ inputs.parameter1 == 'true' }}
       shell: bash
       run: echo "test"
     - name: Run action
