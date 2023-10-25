@@ -5,7 +5,6 @@ on:
   issue_comment:
     types: [created]
 
-# Permissions needed for reacting and adding comments for IssueOps commands
 permissions:
   pull-requests: write
   deployments: write
@@ -14,39 +13,13 @@ permissions:
 
 jobs:
   demo:
-    if: ${{ github.event.issue.pull_request }} # only run on pull request comments
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Create report file
-        run: date +%s > report.txt
-
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        id: commit
+      - uses: github/branch-deploy@v7.5.1
+        id: branch-deploy
         with:
-          branch: tmp/test
-          create_branch: true
+          noop_trigger: test
+          skip_ci: "production"
 
-      #- name: Report tests check
-      #  uses: actions/github-script@v3
-      #  with:
-      #    github-token: ${{ secrets.GITHUB_TOKEN }}
-      #    script: |
-      #      github.checks.create({
-      #        name: 'Status check one',
-      #        head_sha: '${{ steps.commit.outputs.commit_hash }}',
-      #        status: 'completed',
-      #        conclusion: 'success',
-      #        owner: context.repo.owner,
-      #        repo: context.repo.repo
-      #      })
-
-      - name: Merge
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: tmp/test
-          target_branch: main
-          message: '[skip ci] merge'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo ${{ steps.branch-deploy.outputs.ref }}
