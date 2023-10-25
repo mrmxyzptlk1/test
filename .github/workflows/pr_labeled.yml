@@ -1,8 +1,8 @@
 name: Check app token
 
 on:
-  push:
-    branches: feat/test2
+  pull_request:
+    types: [labeled]
 
 jobs:
   check:
@@ -14,3 +14,13 @@ jobs:
         with:
           application_id: ${{ secrets.APPLICATION_ID }}
           application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v3
+
+      - name: Create test file
+        run: date +%s > test.txt
+
+      - name: Add and commit
+        uses: EndBug/add-and-commit@72e246094f1af94def5a07467cd789c503ae8be0
+        with:
+          default_author: github_actions
