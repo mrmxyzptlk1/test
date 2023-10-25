@@ -4,6 +4,8 @@ runs:
   using: "composite"
   steps:
     - name: Step 1
+      shell: bash
       run: echo "test"
     - name: Step 2
+      shell: bash
       run: echo "test"
