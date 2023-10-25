@@ -2,18 +2,37 @@ name: Auto merge
 
 on:
   pull_request:
-    types: [auto_merge_enabled, auto_merge_disabled]
-    #paths:
-    #  - 'folder1/**'
-    #  - 'folder2/**'
+    types: [ opened, reopened, synchronize, auto_merge_enabled, auto_merge_disabled, labeled ]
 
 jobs:
-  detect_change:
+  change_detected:
     runs-on: ubuntu-latest
+    outputs:
+      folder1: ${{ steps.filter.outputs.folder1 }}
+      folder2: ${{ steps.filter.outputs.folder2 }}
     steps:
+      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
+        id: filter
+        with:
+          base: main
+          ref: feature/branch
+          filters: |
+            folder1:
+              - "folder1/**"
+            folder2:
+              - "folder2/**"
+
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v2
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          permissions: "administration:write"
+    
       - uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.PAT }}
+          github-token: ${{ steps.get_workflow_token.outputs.token }}
           script: |
             github.rest.repos.createOrUpdateEnvironment({
               owner: 'mrmxyzptlk1',
@@ -23,7 +42,8 @@ jobs:
             })
 
   auto_merge:
-    needs: detect_change
+    if: ${{ !contains(needs.change_detected.outputs.*, 'false') }}
+    needs: change_detected
     runs-on: ubuntu-latest
     environment: 'PR #2'
     steps:
