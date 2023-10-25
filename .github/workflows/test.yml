@@ -21,5 +21,6 @@ jobs:
         with:
           noop_trigger: test
           skip_ci: "production"
+          deploy_message_path: ".github/deployment_message.md"
 
       - run: echo ${{ steps.branch-deploy.outputs.ref }}
