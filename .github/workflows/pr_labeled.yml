@@ -15,18 +15,22 @@ jobs:
           application_id: ${{ secrets.APPLICATION_ID }}
           application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
 
-      - name: list repos accessible to token
-        run: gh api /installation/repositories --paginate --jq .repositories.[].full_name
-        env:
-          GITHUB_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
+      - name: Check permissions
+        run: |
+          curl -sS -f -I -H "Authorization: token ${{ steps.get_workflow_token.outputs.token }}" https://api.github.com | grep -i x-oauth-scopes
 
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ steps.get_workflow_token.outputs.token }}
+      #- name: list repos accessible to token
+      #  run: gh api /installation/repositories --paginate --jq .repositories.[].full_name
+      #  env:
+      #    GITHUB_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
+
+      #- name: Checkout Code
+      #  uses: actions/checkout@v3
+      #  with:
+      #    fetch-depth: 0
+      #    repository: ${{ github.event.pull_request.head.repo.full_name }}
+      #    ref: ${{ github.event.pull_request.head.ref }}
+      #    token: ${{ steps.get_workflow_token.outputs.token }}
 
      # - name: Create test file
      #   run: date +%s > test.txt
