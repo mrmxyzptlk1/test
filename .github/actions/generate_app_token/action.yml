@@ -33,6 +33,7 @@ runs:
       run: npm install jsonwebtoken
 
     - name: Get jwt
+      id: get_jwt
       uses: actions/github-script@v6
       env:
         APPLICATION_ID: ${{ inputs.app_id }}
@@ -62,7 +63,7 @@ runs:
       env:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
       with:
-        github-token: ${{steps.generate_token.outputs.result}}
+        github-token: ${{steps.get_jwt.outputs.result}}
         script: |
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
           const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
