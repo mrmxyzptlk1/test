@@ -76,6 +76,6 @@ runs:
             }
           });
           console.log(data.token);
-          console.log("Selected permissions: " + data.permissions);
+          console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
           return data.token;
