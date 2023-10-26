@@ -1,0 +1,14 @@
+name: Calling workflow Auto merge
+
+on:
+  push:
+    branches: main
+
+jobs:
+  get_app_token:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const { createAppAuth } = require("@octokit/auth-app");
