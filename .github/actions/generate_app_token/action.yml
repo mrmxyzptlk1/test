@@ -64,10 +64,9 @@ runs:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
       with:
         github-token: ${{steps.get_jwt.outputs.result}}
-        result-encoding: string
         script: |
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
-          const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
+          const data = await github.request('POST /app/installations/{installation_id}/access_tokens', {
             installation_id: installationId,
             repository: 'test',
             permissions: {
@@ -81,11 +80,13 @@ runs:
           console.log(data.token);
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
-          return data.token;
+          core.setSecret(accessToken.token);
+          core.setOutput('token', accessToken.token);
+          core.info(JSON.stringify(accessToken));
 
     - uses: actions/github-script@v6
       with:
-        github-token: ${{ steps.generate_token.outputs.result }}
+        github-token: ${{ steps.generate_token.outputs.token }}
         script: |
           github.rest.repos.createOrUpdateEnvironment({
             owner: 'github.owner',
