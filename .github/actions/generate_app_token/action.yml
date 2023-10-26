@@ -52,19 +52,19 @@ runs:
               fetch: fetch,
             }
           });
-
-          const { data: { token } } = await appOctokit.createInstallationToken({process.env.APPLICATION_INSTALLATION_ID});
-          console.log(token);
-
-          const { access_token } = await appOctokit.auth({
+          
+          const installationOctokit = appOctokit.auth({
             type: "installation",
-            installationId: process.env.APPLICATION_INSTALLATION_ID
+            process.env.APPLICATION_INSTALLATION_ID,
+            factory: ({ octokitOptions, ...auth }) =>
+              new Octokit({ ...octokitOptions, auth }),
           });
+          console.log(installationOctokit);
 
-          console.log(access_token);
+          # console.log(access_token);
 
-          return access_token.token
+          # return access_token.token
 
-    - name: Get token
-      shell: bash
-      run: echo "${{steps.generate_token.outputs.result}}"
+    # - name: Get token
+    #   shell: bash
+    #  run: echo "${{steps.generate_token.outputs.result}}"
