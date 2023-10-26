@@ -58,7 +58,7 @@ runs:
 
           const { token } = await appOctokit.auth({
             type: "installation",
-            installationId: process.env.APPLICATION_INSTALLATION_ID,
+            installationId: process.env.APPLICATION_INSTALLATION_ID
           });
           console.log(token);
 
