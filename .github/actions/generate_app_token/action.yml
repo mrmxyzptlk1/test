@@ -64,6 +64,14 @@ runs:
             process.env.APPLICATION_INSTALLATION_ID
           });
 
+          await appOctokit.request("POST /app/installations/{installation_id}/access_tokens", {
+            installation_id: process.env.APPLICATION_INSTALLATION_ID,
+            repository: 'test',
+            permissions: {
+              contents: 'read'
+            }
+          })
+
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
