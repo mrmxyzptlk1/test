@@ -52,11 +52,12 @@ runs:
               fetch: fetch,
             }
           });
+
+          const { data } = await appOctokit.request("/app");
+          console.log(data);
           
-          const { token } = appOctokit.createInstallationAccessToken({
-            process.env.APPLICATION_INSTALLATION_ID
-          });
-          console.log(token);
+          const { test } = await appOctokit.request("/app/installations/43248865/access_tokens");
+          console.log(test);
 
           # console.log(access_token);
 
