@@ -53,13 +53,10 @@ runs:
             }
           });
           
-          const installationOctokit = appOctokit.auth({
-            type: "installation",
-            installationId: process.env.APPLICATION_INSTALLATION_ID,
-            factory: ({ octokitOptions, ...auth }) =>
-              new Octokit({ ...octokitOptions, auth }),
+          const { token } = appOctokit.createInstallationAccessToken({
+            process.env.APPLICATION_INSTALLATION_ID
           });
-          # console.log(installationOctokit);
+          console.log(token);
 
           # console.log(access_token);
 
