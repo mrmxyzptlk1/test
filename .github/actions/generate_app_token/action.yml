@@ -80,9 +80,9 @@ runs:
           console.log(data.token);
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
-          core.setSecret(accessToken.token);
-          core.setOutput('token', accessToken.token);
-          core.info(JSON.stringify(accessToken));
+          core.info(JSON.stringify(data));
+          core.setSecret(data.token);
+          core.setOutput('token', data.token);
 
     - uses: actions/github-script@v6
       with:
