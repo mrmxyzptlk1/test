@@ -60,6 +60,10 @@ runs:
             type: "app"
           });
 
+          const { data: { token } } = await appOctokit.createInstallationAccessToken({
+            process.env.APPLICATION_INSTALLATION_ID
+          });
+
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
