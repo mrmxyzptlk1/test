@@ -30,7 +30,7 @@ runs:
   
     - name: Install dependencies
       shell: bash
-      run: npm install @octokit/auth-app @octokit/rest
+      run: echo "install"
 
     - name: Generate Github app installation token
       id: generate_token
@@ -53,6 +53,11 @@ runs:
             iss: appId
           }
           const bearer = jsonwebtoken.sign(payload, privateKey, {algorithm: 'RS256'})
+
+          github.auth({
+            type: 'app',
+            token: bearer
+          });
 
     # - name: Get token
     #   shell: bash
