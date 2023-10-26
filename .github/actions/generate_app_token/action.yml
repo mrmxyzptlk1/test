@@ -57,7 +57,6 @@ runs:
             type: "installation"
           });
 
-          console.log(access_token.permissions);
           console.log(access_token);
 
           return access_token.token
