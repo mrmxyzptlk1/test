@@ -65,7 +65,7 @@ runs:
         github-token: ${{steps.generate_token.outputs.result}}
         script: |
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
-          const { data: { token } } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
+          const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
             installation_id: installationId,
             repository: 'test',
             permissions: {
@@ -75,4 +75,5 @@ runs:
               'X-GitHub-Api-Version': '2022-11-28'
             }
           });
-          console.log(token);
+          console.log(data.token);
+          console.log(data.permissions);
