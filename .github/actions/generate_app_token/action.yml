@@ -35,6 +35,7 @@ runs:
         APPLICATION_ID: ${{ inputs.app_id }}
         APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
         APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+        REPOSITORY_ID: ${{ github.repository_id }}
       with:
         script: |            
           const { Octokit } = require("@octokit/rest");
@@ -54,6 +55,7 @@ runs:
 
           const { token } = await appOctokit.auth({
             type: "installation",
+            repositoryIds: process.env.REPOSITORY_ID
             permissions: {
               "contents":"read"
             }
