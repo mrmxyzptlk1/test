@@ -10,6 +10,10 @@ jobs:
     steps:
       - run: npm install @octokit/auth-app @octokit/rest
       - uses: actions/github-script@v6
+        env:
+          APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
+          APPLICATION_PRIVATE_KEY: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          APPLICATION_INSTALLATION_ID: ${{ secrets.APPLICATION_INSTALLATION_ID }}
         with:
           script: |
             const { Octokit } = require("@octokit/rest");
@@ -18,8 +22,8 @@ jobs:
             const appOctokit = new Octokit({
               authStrategy: createAppAuth,
               auth: {
-                appId: ${{ secrets.APPLICATION_ID }},
-                privateKey: ${{ secrets.APPLICATION_PRIVATE_KEY }},
-                installationId: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+                appId: process.env.APPLICATION_ID,
+                privateKey: process.env.APPLICATION_PRIVATE_KEY,
+                installationId: process.env.APPLICATION_INSTALLATION_ID
               },
             });
