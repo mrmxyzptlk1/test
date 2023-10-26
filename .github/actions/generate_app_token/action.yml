@@ -56,7 +56,18 @@ runs:
           const { data } = await appOctokit.request("/app");
           console.log(data);
           
-          const { test } = await appOctokit.request("/app/installations/43248865/access_tokens");
+          const { test } = await appOctokit.request("/app/installations/43248865/access_tokens", 
+          {
+            installation_id: 1,
+            repository: 'Hello-World',
+            permissions: {
+              issues: 'write',
+              contents: 'read'
+            },
+            headers: {
+              'X-GitHub-Api-Version': '2022-11-28'
+            }
+          });
           console.log(test);
 
           # console.log(access_token);
