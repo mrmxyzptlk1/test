@@ -57,19 +57,6 @@ runs:
 
           return bearer;
 
-    - name: Generate Github app installation tokenn
-      uses: actions/github-script@v6
-      env:
-       APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
-      with:
-        github-token: ${{steps.generate_token.outputs.result}}
-        script: |
-          const installationId = process.env.APPLICATION_INSTALLATION_ID;
-          const data = await github.rest.apps.createInstallationAccessToken({
-            installationId
-          });
-          console.log(data);
-
     - name: Generate Github app installation token
       uses: actions/github-script@v6
       env:
