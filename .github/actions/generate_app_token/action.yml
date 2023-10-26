@@ -56,10 +56,6 @@ runs:
           const { data } = await appOctokit.request("/app");
           console.log(data);
 
-          # console.log(access_token);
-
-          # return access_token.token
-
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
