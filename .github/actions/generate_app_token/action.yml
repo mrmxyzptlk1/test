@@ -56,6 +56,12 @@ runs:
           const { data } = await appOctokit.request("/app");
           console.log(data);
 
+          const { token } = await appOctokit.auth({
+            type: "installation",
+            installationId: process.env.APPLICATION_INSTALLATION_ID,
+          });
+          console.log(token);
+
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
