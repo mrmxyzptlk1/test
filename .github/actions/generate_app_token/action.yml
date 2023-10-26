@@ -54,11 +54,7 @@ runs:
           });
 
           const { token } = await appOctokit.auth({
-            type: "installation",
-            repositoryIds: [ 697490681 ]
-            permissions: {
-              "contents": "read"
-            }
+            type: "installation"
           });
 
           return token
