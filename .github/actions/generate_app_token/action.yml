@@ -93,8 +93,8 @@ runs:
         github-token: ${{ steps.generate_token.outputs.token }}
         script: |
           github.rest.repos.createOrUpdateEnvironment({
-            owner: 'github.owner',
-            repo: 'github.repo',
+            owner: 'mrmxyzptlk1',
+            repo: 'test',
             environment_name: 'test,
             wait_timer: 1
           })
