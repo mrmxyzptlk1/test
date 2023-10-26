@@ -60,7 +60,7 @@ runs:
           });
 
           github.rest.apps.createInstallationAccessToken({
-            installation_id,
+            installationId,
           });
 
     # - name: Get token
