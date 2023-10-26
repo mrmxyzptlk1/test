@@ -53,7 +53,7 @@ runs:
             }
           });
 
-          const { data: { token } } = await appOctokit.createInstallationToken({process.env.APPLICATION_INSTALLATION_ID})
+          const { data: { token } } = await appOctokit.createInstallationToken({process.env.APPLICATION_INSTALLATION_ID});
           console.log(token);
 
           const { access_token } = await appOctokit.auth({
