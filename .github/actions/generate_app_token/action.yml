@@ -33,7 +33,6 @@ runs:
       run: npm install jsonwebtoken
 
     - name: Get jwt
-      id: generate_token
       uses: actions/github-script@v6
       env:
         APPLICATION_ID: ${{ inputs.app_id }}
@@ -58,6 +57,7 @@ runs:
           return bearer;
 
     - name: Generate Github app installation token with jwt
+      id: generate_token
       uses: actions/github-script@v6
       env:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
@@ -69,7 +69,8 @@ runs:
             installation_id: installationId,
             repository: 'test',
             permissions: {
-              contents: 'write'
+              contents: "write",
+              administration: "write"
             },
             headers: {
               'X-GitHub-Api-Version': '2022-11-28'
@@ -79,3 +80,14 @@ runs:
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
           return data.token;
+
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate_token.outputs.result }}
+          script: |
+            github.rest.repos.createOrUpdateEnvironment({
+              owner: 'github.owner',
+              repo: 'github.repo',
+              environment_name: 'test,
+              wait_timer: 1
+            })
