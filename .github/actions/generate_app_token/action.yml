@@ -56,18 +56,7 @@ runs:
           const { data } = await appOctokit.request("/app");
           console.log(data);
           
-          const { test } = await appOctokit.request("/app/installations/43248865/access_tokens", 
-          {
-            installation_id: 43248865,
-            repository: 'test',
-            permissions: {
-              issues: 'write',
-              contents: 'read'
-            },
-            headers: {
-              'X-GitHub-Api-Version': '2022-11-28'
-            }
-          });
+          const { test } = await appOctokit.getInstallationAccessToken(43248865, {});
           console.log(test);
 
           # console.log(access_token);
