@@ -67,6 +67,7 @@ runs:
               contents: "read"
             }
           })
+          console.log(token);
 
     # - name: Get token
     #   shell: bash
