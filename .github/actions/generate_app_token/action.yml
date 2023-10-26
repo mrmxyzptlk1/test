@@ -61,14 +61,14 @@ runs:
       shell: bash
       run: echo "${{steps.generate_token.outputs.result}}"
 
-     - name: Generate Github app installation tokenn
-       uses: actions/github-script@v6
-       env:
-        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
-       with:
-         github-token: ${{steps.generate_token.outputs.result}}
-         script: |
-           const installationId = process.env.APPLICATION_INSTALLATION_ID;
-           github.rest.apps.createInstallationAccessToken({
-             installationId,
-           });
+    - name: Generate Github app installation tokenn
+      uses: actions/github-script@v6
+      env:
+       APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+      with:
+        github-token: ${{steps.generate_token.outputs.result}}
+        script: |
+          const installationId = process.env.APPLICATION_INSTALLATION_ID;
+          github.rest.apps.createInstallationAccessToken({
+            installationId,
+          });
