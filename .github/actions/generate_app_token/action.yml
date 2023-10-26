@@ -56,18 +56,16 @@ runs:
           const { data } = await appOctokit.request("/app");
           console.log(data);
 
-          const { token } = await appOctokit.auth({
-            type: "installation",
-            installationId: process.env.APPLICATION_INSTALLATION_ID
+          appOctokit.auth({
+            type: "app"
           });
-          console.log(token);
-
-          const { test } = await appOctokit.checkToken({
-            "Iv1.7e6dbb80944977a9",
-            token.token
-          });
-          console.log(test);
 
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
+
+    #          const { test } = await appOctokit.checkToken({
+    #        "Iv1.7e6dbb80944977a9",
+    #        token.token
+    #      });
+    #      console.log(test);
