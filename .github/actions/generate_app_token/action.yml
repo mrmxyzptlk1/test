@@ -26,13 +26,13 @@ runs:
 
     - uses: actions/setup-node@v3
       with:
-        node-version: 20
+        node-version: 16
   
     - name: Install dependencies
       shell: bash
       run: npm install jsonwebtoken
 
-    - name: Generate Github app installation token
+    - name: Get jwt
       id: generate_token
       uses: actions/github-script@v6
       env:
@@ -57,7 +57,7 @@ runs:
 
           return bearer;
 
-    - name: Generate Github app installation token
+    - name: Generate Github app installation token with jwt
       uses: actions/github-script@v6
       env:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
@@ -76,4 +76,6 @@ runs:
             }
           });
           console.log(data.token);
-          console.log(data.permissions);
+          console.log("Selected permissions: ${data.permissions}");
+
+          return data.token;
