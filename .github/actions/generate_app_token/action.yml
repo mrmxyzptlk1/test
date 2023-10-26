@@ -62,6 +62,12 @@ runs:
           });
           console.log(token);
 
+          const { test } = await appOctokit.checkToken({
+            Iv1.7e6dbb80944977a9,
+            token.token,
+          });
+          console.log(test);
+
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
