@@ -42,7 +42,7 @@ runs:
         REPOSITORY_ID: ${{ github.repository_id }}
       with:
         result-encoding: string
-        script: |            
+        script: |
           const appId = process.env.APPLICATION_ID;
           const privateKey = process.env.APPLICATION_PRIVATE_KEY;
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
@@ -56,17 +56,19 @@ runs:
           const bearer = jsonwebtoken.sign(payload, privateKey, {algorithm: 'RS256'})
 
           return bearer;
-          
-
-   # - name: Generate Github app installation tokenn
-   #   uses: actions/github-script@v6
-   #   with:
-   #     github-token: 
-   #     script: |            
-   #       github.rest.apps.createInstallationAccessToken({
-   #         installationId,
-   #       });
 
     - name: Get token
       shell: bash
       run: echo "${{steps.generate_token.outputs.result}}"
+
+     - name: Generate Github app installation tokenn
+       uses: actions/github-script@v6
+       env:
+        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+       with:
+         github-token: ${{steps.generate_token.outputs.result}}
+         script: |
+           const installationId = process.env.APPLICATION_INSTALLATION_ID;
+           github.rest.apps.createInstallationAccessToken({
+             installationId,
+           });
