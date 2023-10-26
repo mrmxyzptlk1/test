@@ -10,7 +10,7 @@ inputs:
     required: true
   permissions:
     description: "Comma separated list of permissions, e.g. contents:write,issues:read."
-    required: false
+    required: true
 
 outputs:
   token:
@@ -62,6 +62,7 @@ runs:
       uses: actions/github-script@v6
       env:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+       PERMISSIONS: ${{ inputs.permissions }}
       with:
         github-token: ${{steps.get_jwt.outputs.result}}
         script: |
@@ -69,10 +70,7 @@ runs:
           const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
             installation_id: installationId,
             repository: 'test',
-            permissions: {
-              contents: "write",
-              administration: "write"
-            },
+            permissions: { process.env.PERMISSIONS },
             headers: {
               'X-GitHub-Api-Version': '2022-11-28'
             }
