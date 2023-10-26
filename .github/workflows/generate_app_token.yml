@@ -8,6 +8,7 @@ jobs:
   get_app_token:
     runs-on: ubuntu-latest
     steps:
+      - run: echo "test"
       - uses: actions/github-script@v6
         with:
           script: |
