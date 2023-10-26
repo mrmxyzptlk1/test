@@ -55,9 +55,6 @@ runs:
 
           const { data } = await appOctokit.request("/app");
           console.log(data);
-          
-          const { test } = await appOctokit.createInstallationAccessToken(43248865);
-          console.log(test);
 
           # console.log(access_token);
 
