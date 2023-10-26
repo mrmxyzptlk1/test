@@ -53,11 +53,14 @@ runs:
             }
           });
 
-          const { token } = await appOctokit.auth({
+          const { access_token } = await appOctokit.auth({
             type: "installation"
           });
 
-          return token
+          console.log(access_token.permissions);
+          console.log(access_token);
+
+          return access_token.token
 
     - name: Get token
       shell: bash
