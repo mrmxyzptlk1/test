@@ -41,6 +41,7 @@ runs:
         APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
         REPOSITORY_ID: ${{ github.repository_id }}
       with:
+        result-encoding: string
         script: |            
           const appId = process.env.APPLICATION_ID;
           const privateKey = process.env.APPLICATION_PRIVATE_KEY;
