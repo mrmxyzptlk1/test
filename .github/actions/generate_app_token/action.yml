@@ -58,8 +58,8 @@ runs:
           
           const { test } = await appOctokit.request("/app/installations/43248865/access_tokens", 
           {
-            installation_id: 1,
-            repository: 'Hello-World',
+            installation_id: 43248865,
+            repository: 'test',
             permissions: {
               issues: 'write',
               contents: 'read'
