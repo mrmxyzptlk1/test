@@ -20,7 +20,12 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v3
+      with:
+        path: tmp
+  
     - name: Install dependencies
+      shell: bash
       run: npm install @octokit/auth-app @octokit/rest
 
     - name: Generate Github app installation token
@@ -57,4 +62,5 @@ runs:
           return token
 
     - name: Get token
+      shell: bash
       run: echo "${{steps.generate_token.outputs.result}}"
