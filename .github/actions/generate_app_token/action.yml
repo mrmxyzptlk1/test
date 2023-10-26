@@ -69,7 +69,7 @@ runs:
             installation_id: installationId,
             repository: 'test',
             permissions: {
-              contents: 'read'
+              contents: 'write'
             },
             headers: {
               'X-GitHub-Api-Version': '2022-11-28'
