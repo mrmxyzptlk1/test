@@ -15,7 +15,9 @@ jobs:
       - name: Install dependencies
         run: npm install @octokit/auth-app @octokit/rest
 
-      - uses: actions/github-script@v6
+      - name: Generate Github app installation token
+        id: generate_token
+        uses: actions/github-script@v6
         env:
           APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
           APPLICATION_PRIVATE_KEY: ${{ secrets.APPLICATION_PRIVATE_KEY }}
@@ -40,3 +42,8 @@ jobs:
             const { token } = await appOctokit.auth({
               type: "installation"
             });
+
+            return token
+
+      - name: Get token
+        run: echo "${{steps.generate_token.outputs.result}}"
