@@ -60,10 +60,13 @@ runs:
             type: "app"
           });
 
-          const { data: { token } } = await appOctokit.createInstallationAccessToken({
-            process.env.APPLICATION_INSTALLATION_ID
-          });
-          console.log(token);
+          await appOctokit.request("POST /app/installations/{installation_id}/access_tokens", {
+            installation_id: process.env.APPLICATION_INSTALLATION_ID,
+            repository: "test",
+            permissions: {
+              contents: "read"
+            }
+          })
 
     # - name: Get token
     #   shell: bash
