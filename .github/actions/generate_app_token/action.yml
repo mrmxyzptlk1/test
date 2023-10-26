@@ -81,7 +81,6 @@ runs:
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
           core.info(JSON.stringify(data));
-          core.setSecret(data.token);
           core.setOutput('token', data.token);
 
     - name: check
