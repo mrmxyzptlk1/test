@@ -19,6 +19,6 @@ jobs:
       - name: Echo token
         run: echo "${{ steps.generate_token.outputs.token }}"
 
-     # - uses: actions/checkout@v3
-     #   with:
-     #     token: ${{ steps.generate_token.outputs.token }}
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
