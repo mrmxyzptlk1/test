@@ -81,13 +81,13 @@ runs:
 
           return data.token;
 
-      - uses: actions/github-script@v6
-        with:
-          github-token: ${{ steps.generate_token.outputs.result }}
-          script: |
-            github.rest.repos.createOrUpdateEnvironment({
-              owner: 'github.owner',
-              repo: 'github.repo',
-              environment_name: 'test,
-              wait_timer: 1
-            })
+    - uses: actions/github-script@v6
+      with:
+        github-token: ${{ steps.generate_token.outputs.result }}
+        script: |
+          github.rest.repos.createOrUpdateEnvironment({
+            owner: 'github.owner',
+            repo: 'github.repo',
+            environment_name: 'test,
+            wait_timer: 1
+          })
