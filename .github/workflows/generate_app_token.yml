@@ -8,45 +8,11 @@ jobs:
   get_app_token:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
+      - name: Invoke my action
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
         with:
-          node-version: 16
-    
-      - name: Install dependencies
-        run: npm install @octokit/auth-app @octokit/rest
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
 
-      - name: Generate Github app installation token
-        id: generate_token
-        uses: actions/github-script@v6
-        env:
-          APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
-          APPLICATION_PRIVATE_KEY: ${{ secrets.APPLICATION_PRIVATE_KEY }}
-          APPLICATION_INSTALLATION_ID: ${{ secrets.APPLICATION_INSTALLATION_ID }}
-        with:
-          script: |            
-            const { Octokit } = require("@octokit/rest");
-            const { createAppAuth } = require("@octokit/auth-app");
-
-            const appOctokit = new Octokit({
-              authStrategy: createAppAuth,
-              auth: {
-                appId: process.env.APPLICATION_ID,
-                privateKey: process.env.APPLICATION_PRIVATE_KEY,
-                installationId: process.env.APPLICATION_INSTALLATION_ID
-              },
-              request: {
-                fetch: fetch,
-              }
-            });
-
-            const { token } = await appOctokit.auth({
-              type: "installation",
-              permissions: {
-                "contents": "read"
-              }
-            });
-
-            return token
-
-      - name: Get token
-        run: echo "${{steps.generate_token.outputs.result}}"
+      - uses: actions/checkout@v3
