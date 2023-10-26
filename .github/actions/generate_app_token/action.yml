@@ -59,7 +59,7 @@ runs:
             factory: ({ octokitOptions, ...auth }) =>
               new Octokit({ ...octokitOptions, auth }),
           });
-          console.log(installationOctokit);
+          # console.log(installationOctokit);
 
           # console.log(access_token);
 
