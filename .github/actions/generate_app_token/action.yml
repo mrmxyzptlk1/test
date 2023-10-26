@@ -66,6 +66,6 @@ runs:
       env:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
       with:
-        github-token: ${{steps.generate_token.outputs.result}}
+        # github-token: ${{steps.generate_token.outputs.result}}
         script: |
           github.rest.apps.getAuthenticated();
