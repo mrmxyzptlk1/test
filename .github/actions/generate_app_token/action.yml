@@ -53,6 +53,9 @@ runs:
             }
           });
 
+          const { data } = await appOctokit.request("/app");
+          console.log(data);
+
           const { access_token } = await appOctokit.auth({
             type: "installation"
           });
