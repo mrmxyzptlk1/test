@@ -40,7 +40,10 @@ jobs:
             });
 
             const { token } = await appOctokit.auth({
-              type: "installation"
+              type: "installation",
+              permissions: {
+                "contents": "read"
+              }
             });
 
             return token
