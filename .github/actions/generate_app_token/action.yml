@@ -23,6 +23,10 @@ runs:
     - uses: actions/checkout@v3
       with:
         path: tmp
+
+    - uses: actions/setup-node@v3
+        with:
+          node-version: 16
   
     - name: Install dependencies
       shell: bash
@@ -38,44 +42,18 @@ runs:
         REPOSITORY_ID: ${{ github.repository_id }}
       with:
         script: |            
-          const { Octokit } = require("@octokit/rest");
-          const { createAppAuth } = require("@octokit/auth-app");
-
-          const appOctokit = new Octokit({
-            authStrategy: createAppAuth,
-            auth: {
-              appId: process.env.APPLICATION_ID,
-              privateKey: process.env.APPLICATION_PRIVATE_KEY,
-              installationId: process.env.APPLICATION_INSTALLATION_ID
-            },
-            request: {
-              fetch: fetch,
-            }
-          });
-
-          const { data } = await appOctokit.request("/app");
-          console.log(data);
-
-          const { jwt } = await appOctokit.auth({
-            type: "app"
-          });
-          console.log(jwt.type);
-
-          const { token } = await appOctokit.request("POST /app/installations/{installation_id}/access_tokens", {
-            installation_id: process.env.APPLICATION_INSTALLATION_ID,
-            repository: "test",
-            permissions: {
-              contents: "read"
-            }
-          })
-          console.log(token);
+          const appId = process.env.APPLICATION_ID;
+          const privateKey = process.env.APPLICATION_PRIVATE_KEY;
+          const installationId = process.env.APPLICATION_INSTALLATION_ID;
+          const jsonwebtoken = require('jsonwebtoken')
+          const now = Math.floor(Date.now() / 1000)
+          const payload = {
+            iat: now, // Issued at time
+            exp: now + 60, // JWT expiration time
+            iss: appId
+          }
+          const bearer = jsonwebtoken.sign(payload, privateKey, {algorithm: 'RS256'})
 
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
-
-    #          const { test } = await appOctokit.checkToken({
-    #        "Iv1.7e6dbb80944977a9",
-    #        token.token
-    #      });
-    #      console.log(test);
