@@ -59,7 +59,7 @@ runs:
           const { jwt } = await appOctokit.auth({
             type: "app"
           });
-          console.log(jwt);
+          console.log(jwt.type);
 
           const { token } = await appOctokit.request("POST /app/installations/{installation_id}/access_tokens", {
             installation_id: process.env.APPLICATION_INSTALLATION_ID,
