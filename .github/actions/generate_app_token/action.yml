@@ -64,6 +64,7 @@ runs:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
       with:
         github-token: ${{steps.get_jwt.outputs.result}}
+        result-encoding: string
         script: |
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
           const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
