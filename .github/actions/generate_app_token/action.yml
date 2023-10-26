@@ -53,15 +53,17 @@ runs:
             iss: appId
           }
           const bearer = jsonwebtoken.sign(payload, privateKey, {algorithm: 'RS256'})
+          console.log(bearer);
+          
 
-          github.auth({
-            type: 'app',
-            token: bearer
-          });
-
-          github.rest.apps.createInstallationAccessToken({
-            installationId,
-          });
+   # - name: Generate Github app installation tokenn
+   #   uses: actions/github-script@v6
+   #   with:
+   #     github-token: 
+   #     script: |            
+   #       github.rest.apps.createInstallationAccessToken({
+   #         installationId,
+   #       });
 
     # - name: Get token
     #   shell: bash
