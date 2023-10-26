@@ -27,3 +27,7 @@ jobs:
                 installationId: process.env.APPLICATION_INSTALLATION_ID
               },
             });
+
+            const { token } = await appOctokit.auth({
+              type: "installation"
+            });
