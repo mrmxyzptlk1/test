@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 16
     
       - name: Install dependencies
         run: npm install @octokit/auth-app @octokit/rest
@@ -22,6 +22,8 @@ jobs:
           APPLICATION_INSTALLATION_ID: ${{ secrets.APPLICATION_INSTALLATION_ID }}
         with:
           script: |
+            import fetch from "node-fetch";
+            
             const { Octokit } = require("@octokit/rest");
             const { createAppAuth } = require("@octokit/auth-app");
 
@@ -32,6 +34,9 @@ jobs:
                 privateKey: process.env.APPLICATION_PRIVATE_KEY,
                 installationId: process.env.APPLICATION_INSTALLATION_ID
               },
+              request: {
+                fetch: fetch,
+              }
             });
 
             const { token } = await appOctokit.auth({
