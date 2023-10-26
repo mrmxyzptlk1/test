@@ -85,6 +85,7 @@ runs:
           core.setOutput('token', data.token);
 
     - name: check
+      shell: bash
       run: echo ${{ steps.generate_token.outputs.token }} | sed 's/./& /g'
 
     - uses: actions/github-script@v6
