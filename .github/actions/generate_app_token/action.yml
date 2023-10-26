@@ -53,7 +53,8 @@ runs:
             iss: appId
           }
           const bearer = jsonwebtoken.sign(payload, privateKey, {algorithm: 'RS256'})
-          console.log(bearer);
+
+          return bearer;
           
 
    # - name: Generate Github app installation tokenn
@@ -65,6 +66,6 @@ runs:
    #         installationId,
    #       });
 
-    # - name: Get token
-    #   shell: bash
-    #  run: echo "${{steps.generate_token.outputs.result}}"
+    - name: Get token
+      shell: bash
+      run: echo "${{steps.generate_token.outputs.result}}"
