@@ -59,7 +59,12 @@ runs:
 
     - name: Get token
       shell: bash
-      run: echo "${{steps.generate_token.outputs.result}}"
+      run: |
+        curl --request GET \
+        --url "https://api.github.com/app" \
+        --header "Accept: application/vnd.github+json" \
+        --header "Authorization: Bearer ${{steps.generate_token.outputs.result}}" \
+        --header "X-GitHub-Api-Version: 2022-11-28"
 
     - name: Generate Github app installation tokenn
       uses: actions/github-script@v6
