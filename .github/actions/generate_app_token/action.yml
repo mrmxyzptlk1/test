@@ -30,7 +30,7 @@ runs:
   
     - name: Install dependencies
       shell: bash
-      run: echo "install"
+      run: npm install jsonwebtoken
 
     - name: Generate Github app installation token
       id: generate_token
