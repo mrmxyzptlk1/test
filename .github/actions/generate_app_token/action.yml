@@ -59,6 +59,10 @@ runs:
             token: bearer
           });
 
+          github.rest.apps.createInstallationAccessToken({
+            installation_id,
+          });
+
     # - name: Get token
     #   shell: bash
     #  run: echo "${{steps.generate_token.outputs.result}}"
