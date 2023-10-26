@@ -73,5 +73,5 @@ runs:
       with:
         github-token: ${{steps.generate_token.outputs.result}}
         script: |
-          const { data } = github.rest.apps.getAuthenticated();
-          console.log(data);
+          const data = github.rest.apps.getAuthenticated();
+          console.log(JSON.stringify(data));
