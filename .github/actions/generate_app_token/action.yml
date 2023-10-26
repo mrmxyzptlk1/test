@@ -60,7 +60,7 @@ runs:
             type: "app"
           });
 
-          await appOctokit.request("POST /app/installations/{installation_id}/access_tokens", {
+          const { token } = await appOctokit.request("POST /app/installations/{installation_id}/access_tokens", {
             installation_id: process.env.APPLICATION_INSTALLATION_ID,
             repository: "test",
             permissions: {
