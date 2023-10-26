@@ -55,7 +55,7 @@ runs:
           
           const installationOctokit = appOctokit.auth({
             type: "installation",
-            process.env.APPLICATION_INSTALLATION_ID,
+            installationId: process.env.APPLICATION_INSTALLATION_ID,
             factory: ({ octokitOptions, ...auth }) =>
               new Octokit({ ...octokitOptions, auth }),
           });
