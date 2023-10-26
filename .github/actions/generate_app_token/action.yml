@@ -68,7 +68,4 @@ runs:
       with:
         github-token: ${{steps.generate_token.outputs.result}}
         script: |
-          const installationId = process.env.APPLICATION_INSTALLATION_ID;
-          github.rest.apps.createInstallationAccessToken({
-            installationId,
-          });
+          github.rest.apps.getAuthenticated();
