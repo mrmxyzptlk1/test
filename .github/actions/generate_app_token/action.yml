@@ -83,10 +83,6 @@ runs:
           core.info(JSON.stringify(data));
           core.setOutput('token', data.token);
 
-    - name: check
-      shell: bash
-      run: echo ${{ steps.generate_token.outputs.token }} | sed 's/./& /g'
-
     - name: Check with curl
       shell: bash
       run: |
