@@ -84,6 +84,11 @@ runs:
           core.setSecret(data.token);
           core.setOutput('token', data.token);
 
+          github.rest.apps.checkToken({
+            Iv1.7e6dbb80944977a9,
+            data.token,
+          });
+
     - uses: actions/github-script@v6
       with:
         github-token: ${{ steps.generate_token.outputs.token }}
