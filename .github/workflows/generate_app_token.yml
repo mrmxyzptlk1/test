@@ -21,9 +21,7 @@ jobs:
           APPLICATION_PRIVATE_KEY: ${{ secrets.APPLICATION_PRIVATE_KEY }}
           APPLICATION_INSTALLATION_ID: ${{ secrets.APPLICATION_INSTALLATION_ID }}
         with:
-          script: |
-            import fetch from "node-fetch";
-            
+          script: |            
             const { Octokit } = require("@octokit/rest");
             const { createAppAuth } = require("@octokit/auth-app");
 
