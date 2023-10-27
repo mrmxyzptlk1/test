@@ -58,4 +58,4 @@ runs:
         # github-token: ${{steps.get_jwt.outputs.result}}
         script: |
           const script = require('./tmp/.github/scripts/generate_app_token.js');
-          await script({github, context, core});
+          await script({github, context, core, fetch});
