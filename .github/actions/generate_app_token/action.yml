@@ -66,23 +66,17 @@ runs:
       with:
         github-token: ${{steps.get_jwt.outputs.result}}
         script: |
-          permissions = process.env.PERMISSIONS;
-          console.log(permissions);
+          const installationId = process.env.APPLICATION_INSTALLATION_ID;
+          const permissions = process.env.PERMISSIONS;
 
           permissions.trim();
-          console.log(permissions);
-
           const perm_array = permissions.split(",");
-          console.log(perm_array);
-
           var perm_obj = {};
-            for (var i = 0; i < perm_array.length; i++) {
-                var split = perm_array[i].split(':');
-                perm_obj[split[0].trim()] = split[1].trim();
-            }
-          console.log(JSON.stringify(perm_obj));
+          for (var i = 0; i < perm_array.length; i++) {
+            var split = perm_array[i].split(':');
+            perm_obj[split[0].trim()] = split[1].trim();
+          }
         
-          const installationId = process.env.APPLICATION_INSTALLATION_ID;
           const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
             installation_id: installationId,
             repository: 'test',
@@ -91,6 +85,7 @@ runs:
               'X-GitHub-Api-Version': '2022-11-28'
             }
           });
+          console.log(data);
           console.log(data.token);
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
