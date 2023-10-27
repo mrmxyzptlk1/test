@@ -79,7 +79,6 @@ runs:
         
           const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
             installation_id: installationId,
-            repository: 'test',
             permissions: perm_obj,
             headers: {
               'X-GitHub-Api-Version': '2022-11-28'
@@ -89,7 +88,6 @@ runs:
           console.log(data.token);
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
-          core.info(JSON.stringify(data));
           core.setOutput('token', data.token);
 
    # - name: Check with curl
