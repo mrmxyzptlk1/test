@@ -8,18 +8,14 @@ jobs:
   get_app_token:
     runs-on: ubuntu-latest
     steps:
-      - name: Check
-        run:  |
-          echo ${{ fromJSON(toJSON(vars)).VAR_ONE }}
-          echo ${{ fromJSON(toJSON(vars)).VAR_TWO }}
-      #- name: Generate app token
-      #  id: generate_token
-      #  uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
-      #  with:
-      #    app_id: ${{ secrets.APPLICATION_ID }}
-      #    app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
-      #    app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
-      #    permissions: "contents: write, administration: write"
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
+        with:
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+          permissions: "contents: write, administration: write"
 
       #- uses: actions/checkout@v3
       #  with:
