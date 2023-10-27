@@ -74,6 +74,13 @@ runs:
 
           const perm_array = permissions.split(",");
           console.log(perm_array);
+
+          var perm_obj = {};
+            for (var i = 0; i < perm_array.length; i++) {
+                var split = perm_array[i].split(':');
+                obj[split[0].trim()] = split[1].trim();
+            }
+          console.log(JSON.stringify(perm_obj));
         
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
           const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
