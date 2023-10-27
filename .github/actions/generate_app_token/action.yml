@@ -69,13 +69,13 @@ runs:
             authStrategy: createAppAuth,
             auth: {
               appId: appId,
-              privateKey: privateKey
+              privateKey: privateKey,
+              installationId: installationId
             },
             request: { fetch }
           });
           const data = await appOctokit.auth({
-            type: "installation",
-            installationId: installationId
+            type: "installation"
           });
           console.log(data);
 
