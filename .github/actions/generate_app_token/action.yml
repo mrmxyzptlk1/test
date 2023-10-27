@@ -73,11 +73,11 @@ runs:
             },
             request: { fetch }
           });
-          const { token } = await appOctokit.auth({
+          const test = await appOctokit.auth({
             type: "installation",
             installationId: installationId
           });
-          console.log(token);
+          console.log(test);
 
           permissions.trim();
           const perm_array = permissions.split(",");
