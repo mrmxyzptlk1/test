@@ -69,8 +69,8 @@ runs:
           permissions = process.env.PERMISSIONS;
           console.log(permissions);
 
-          # permissions.trim();
-          # console.log(permissions);
+          permissions.trim();
+          console.log(permissions);
 
           const perm_array = permissions.split(",");
           console.log(perm_array);
