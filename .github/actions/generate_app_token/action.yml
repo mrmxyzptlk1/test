@@ -39,7 +39,6 @@ runs:
         APPLICATION_ID: ${{ inputs.app_id }}
         APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
         APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
-        REPOSITORY_ID: ${{ github.repository_id }}
       with:
         result-encoding: string
         script: |
@@ -62,12 +61,14 @@ runs:
       uses: actions/github-script@v6
       env:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+       REPOSITORY_ID: ${{ github.repository_id }}
        PERMISSIONS: ${{ inputs.permissions }}
       with:
         github-token: ${{steps.get_jwt.outputs.result}}
         script: |
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
           const permissions = process.env.PERMISSIONS;
+          const repository_id = process.env.REPOSITORY_ID;
 
           permissions.trim();
           const perm_array = permissions.split(",");
@@ -79,6 +80,7 @@ runs:
         
           const { data } = await github.request('POST /app/installations/{installation_id}/access_tokens', {
             installation_id: installationId,
+            repository_ids: [ repository_id ],
             permissions: perm_obj,
             headers: {
               'X-GitHub-Api-Version': '2022-11-28'
