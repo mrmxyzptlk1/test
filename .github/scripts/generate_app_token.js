@@ -1,7 +1,6 @@
-module.exports = async ({github, context, core, fetch}) => {
+module.exports = async ({github, core, fetch}) => {
   const installationId = process.env.APPLICATION_INSTALLATION_ID;
   const permissions = process.env.PERMISSIONS;
-  const repository_id = process.env.REPOSITORY_ID;
   const privateKey = process.env.APPLICATION_PRIVATE_KEY;
   const appId = process.env.APPLICATION_ID;
 
@@ -26,7 +25,7 @@ module.exports = async ({github, context, core, fetch}) => {
   });
   const data = await appOctokit.auth({
     type: "installation",
-    repositoryIds: [ repository_id ],
+    repositoryIds: [ github.repository_id ],
     permissions: perm_obj
   });
   console.log(data);
