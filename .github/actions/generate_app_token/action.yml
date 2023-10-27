@@ -39,14 +39,13 @@ runs:
         APPLICATION_ID: ${{ inputs.app_id }}
         APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
         APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
-        REPOSITORY_ID: ${{ github.repository_id }}
-        PERMISSIONS: ${{ inputs.permissions }}
       with:
         result-encoding: string
         script: |
           const appId = process.env.APPLICATION_ID;
           const privateKey = process.env.APPLICATION_PRIVATE_KEY;
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
+          
           const jsonwebtoken = require('jsonwebtoken')
           const now = Math.floor(Date.now() / 1000)
           const payload = {
@@ -55,36 +54,6 @@ runs:
             iss: appId
           }
           const bearer = jsonwebtoken.sign(payload, privateKey, {algorithm: 'RS256'})
-
-
-          const octokit = new Octokit({
-            auth: bearer
-          })
-
-          const permissions = process.env.PERMISSIONS;
-          const repository_id = process.env.REPOSITORY_ID;
-
-          permissions.trim();
-          const perm_array = permissions.split(",");
-          var perm_obj = {};
-          for (var i = 0; i < perm_array.length; i++) {
-            var split = perm_array[i].split(':');
-            perm_obj[split[0].trim()] = split[1].trim();
-          }
-        
-          const { data } = await octokit.request('POST /app/installations/{installation_id}/access_tokens', {
-            installation_id: installationId,
-            repository_ids: [ repository_id ],
-            permissions: perm_obj,
-            headers: {
-              'X-GitHub-Api-Version': '2022-11-28'
-            }
-          });
-          console.log(data);
-          console.log(data.token);
-          console.log("Selected permissions: " + JSON.stringify(data.permissions));
-
-          core.setOutput('token', data.token);
 
           return bearer;
 
@@ -123,14 +92,3 @@ runs:
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
           core.setOutput('token', data.token);
-
-   # - name: Check with curl
-   #   shell: bash
-   #   run: |
-   #     curl -L \
-   #     -X PUT \
-   #     -H "Accept: application/vnd.github+json" \
-   #     -H "Authorization: Bearer ${{ steps.generate_token.outputs.token }}" \
-   #     -H "X-GitHub-Api-Version: 2022-11-28" \
-   #     https://api.github.com/repos/mrmxyzptlk1/test/environments/test \
-   #     -d '{"wait_timer":1}'
