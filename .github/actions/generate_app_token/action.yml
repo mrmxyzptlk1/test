@@ -80,3 +80,4 @@ runs:
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
           core.setOutput('token', data.token);
+
