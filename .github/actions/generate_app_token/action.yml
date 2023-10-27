@@ -40,7 +40,7 @@ runs:
         APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
         APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
       with:
-        result-encoding: string
+        # result-encoding: string
         script: |
           const script = require('./tmp/.github/scripts/get_jwt.js')
           await script({github, context, core})
