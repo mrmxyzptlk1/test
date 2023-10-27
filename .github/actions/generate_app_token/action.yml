@@ -30,20 +30,20 @@ runs:
   
     - name: Install dependencies
       shell: bash
-      run: npm install jsonwebtoken
+      run: npm install jsonwebtoken @octokit/auth-app
 
-    - name: Get jwt
-      id: get_jwt
-      uses: actions/github-script@v6
-      env:
-        APPLICATION_ID: ${{ inputs.app_id }}
-        APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
-        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
-      with:
-        result-encoding: string
-        script: |
-          const script = require('./tmp/.github/scripts/get_jwt.js');
-          script({github, context, core});
+    #- name: Get jwt
+    #  id: get_jwt
+    #  uses: actions/github-script@v6
+    #  env:
+    #    APPLICATION_ID: ${{ inputs.app_id }}
+    #    APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
+    #    APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+    #  with:
+    #    result-encoding: string
+    #    script: |
+    #      const script = require('./tmp/.github/scripts/get_jwt.js');
+    #      script({github, context, core});
 
     - name: Generate Github app installation token with jwt
       id: generate_token
@@ -53,11 +53,16 @@ runs:
        REPOSITORY_ID: ${{ github.repository_id }}
        PERMISSIONS: ${{ inputs.permissions }}
       with:
-        github-token: ${{steps.get_jwt.outputs.result}}
+        # github-token: ${{steps.get_jwt.outputs.result}}
         script: |
           const installationId = process.env.APPLICATION_INSTALLATION_ID;
           const permissions = process.env.PERMISSIONS;
           const repository_id = process.env.REPOSITORY_ID;
+
+          const { createAppAuth } = require("@octokit/auth-app");
+          const auth = createAppAuth({ id, privateKey });
+          const { token } = await auth({ type: "installation", installationId });
+          console.log(`installation access token: ${token}`);
 
           permissions.trim();
           const perm_array = permissions.split(",");
