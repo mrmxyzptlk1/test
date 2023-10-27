@@ -63,6 +63,14 @@ runs:
           const privateKey = process.env.APPLICATION_PRIVATE_KEY;
           const appId = process.env.APPLICATION_ID;
 
+          permissions.trim();
+          const perm_array = permissions.split(",");
+          var perm_obj = {};
+          for (var i = 0; i < perm_array.length; i++) {
+            var split = perm_array[i].split(':');
+            perm_obj[split[0].trim()] = split[1].trim();
+          }
+
           const { Octokit } = require("@octokit/rest");
           const { createAppAuth } = require("@octokit/auth-app");
           const appOctokit = new Octokit({
@@ -75,17 +83,10 @@ runs:
             request: { fetch }
           });
           const data = await appOctokit.auth({
-            type: "installation"
+            type: "installation",
+            repositoryIds: [ repository_id ]
           });
           console.log(data);
-
-          permissions.trim();
-          const perm_array = permissions.split(",");
-          var perm_obj = {};
-          for (var i = 0; i < perm_array.length; i++) {
-            var split = perm_array[i].split(':');
-            perm_obj[split[0].trim()] = split[1].trim();
-          }
         
           console.log("Selected permissions: " + JSON.stringify(data.permissions));
 
