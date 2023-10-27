@@ -1,4 +1,4 @@
-rnmodule.exports = ({github, context, core}) => {
+module.exports = ({github, context, core}) => {
   const appId = process.env.APPLICATION_ID;
   const privateKey = process.env.APPLICATION_PRIVATE_KEY;
   const installationId = process.env.APPLICATION_INSTALLATION_ID;
