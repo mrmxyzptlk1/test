@@ -12,5 +12,5 @@ module.exports = ({github, context}) => {
   }
   const bearer = jsonwebtoken.sign(payload, privateKey, {algorithm: 'RS256'})
 
-  return bearer;
+  core.setOutput('result', bearer);
 }
