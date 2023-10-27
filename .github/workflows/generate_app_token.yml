@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: Check
         run:  |
-          echo ${{ fromJSON(toJSON(vars_as_json)).VAR_ONE }}
-          echo ${{ fromJSON(toJSON(vars_as_json)).VAR_TWO }}
+          echo ${{ fromJSON(toJSON(vars)).VAR_ONE }}
+          echo ${{ fromJSON(toJSON(vars)).VAR_TWO }}
       #- name: Generate app token
       #  id: generate_token
       #  uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
