@@ -84,7 +84,8 @@ runs:
           });
           const data = await appOctokit.auth({
             type: "installation",
-            repositoryIds: [ repository_id ]
+            repositoryIds: [ repository_id ],
+            permissions: perm_obj
           });
           console.log(data);
         
