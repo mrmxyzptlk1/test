@@ -43,7 +43,7 @@ runs:
         result-encoding: string
         script: |
           const script = require('./tmp/.github/scripts/get_jwt.js')
-          console.log(script({github, context}))
+          await script({github, context})
 
     - name: Generate Github app installation token with jwt
       id: generate_token
