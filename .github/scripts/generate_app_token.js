@@ -1,4 +1,4 @@
-module.exports = async ({github, context, core}) => {
+module.exports = async ({github, context, core, fetch}) => {
   const installationId = process.env.APPLICATION_INSTALLATION_ID;
   const permissions = process.env.PERMISSIONS;
   const repository_id = process.env.REPOSITORY_ID;
