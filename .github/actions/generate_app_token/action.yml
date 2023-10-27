@@ -52,10 +52,10 @@ runs:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
        APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
        APPLICATION_ID: ${{ inputs.app_id }}
-       REPOSITORY_ID: ${{ github.repository_id }}
+       # REPOSITORY_ID: ${{ github.repository_id }}
        PERMISSIONS: ${{ inputs.permissions }}
       with:
         # github-token: ${{steps.get_jwt.outputs.result}}
         script: |
           const script = require('./tmp/.github/scripts/generate_app_token.js');
-          await script({github, context, core, fetch});
+          await script({github, core, fetch});
