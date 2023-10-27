@@ -1,9 +1,9 @@
-module.exports = async ({github, core, fetch}) => {
+module.exports = async ({core, fetch}) => {
   const installationId = process.env.APPLICATION_INSTALLATION_ID;
   const permissions = process.env.PERMISSIONS;
   const privateKey = process.env.APPLICATION_PRIVATE_KEY;
   const appId = process.env.APPLICATION_ID;
-  const repository_id = github.repository_id;
+  const repository_id = process.env.REPOSITORY_ID;
 
   permissions.trim();
   const perm_array = permissions.split(",");
