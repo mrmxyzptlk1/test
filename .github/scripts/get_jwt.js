@@ -15,5 +15,5 @@ module.exports = ({github, context, core}) => {
   console.log(bearer);
   console.log("test");
   
-  return bearer;
+  core.setOutput('result', bearer);
 }
