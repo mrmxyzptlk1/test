@@ -51,7 +51,7 @@ runs:
       env:
        APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
        APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
-       APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+       APPLICATION_ID: ${{ inputs.app_id }}
        REPOSITORY_ID: ${{ github.repository_id }}
        PERMISSIONS: ${{ inputs.permissions }}
       with:
