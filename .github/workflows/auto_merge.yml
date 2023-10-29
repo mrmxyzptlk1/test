@@ -39,7 +39,7 @@ jobs:
             github.rest.repos.createOrUpdateEnvironment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              environment_name: 'test',
+              environment_name: 'PR #2',
               wait_timer: 1
             })
 
@@ -68,5 +68,5 @@ jobs:
             github.rest.repos.deleteAnEnvironment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              environment_name: 'test'
+              environment_name: 'PR #2'
             })
