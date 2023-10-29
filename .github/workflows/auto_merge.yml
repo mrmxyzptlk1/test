@@ -44,7 +44,7 @@ jobs:
             })
 
   auto_merge:
-    if: ${{ !contains(needs.change_detected.outputs.*, 'false') }}
+    # if: ${{ !contains(needs.change_detected.outputs.*, 'false') }}
     needs: change_detected
     runs-on: ubuntu-latest
     environment: 'PR #2'
