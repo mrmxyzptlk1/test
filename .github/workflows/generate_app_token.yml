@@ -21,6 +21,17 @@ jobs:
         with:
           token: ${{ steps.generate_token.outputs.token }}
 
+      - name: Create environment with github-script
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
+          script: |
+            github.rest.repos.createOrUpdateEnvironment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment_name: 'test'
+            })
+      
       - name: Check with curl
         shell: bash
         run: |
