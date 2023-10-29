@@ -55,7 +55,6 @@ runs:
        REPOSITORY_ID: ${{ github.repository_id }}
        PERMISSIONS: ${{ inputs.permissions }}
       with:
-        # github-token: ${{steps.get_jwt.outputs.result}}
         script: |
           const script = require('./tmp/.github/scripts/generate_app_token.js');
           await script({core, fetch});
