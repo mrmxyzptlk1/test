@@ -51,10 +51,19 @@ jobs:
     steps:
       - run: echo "auto_merge!"
 
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
+        with:
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+          permissions: "administration:write"
+
       - name: Delete environment with github-script
         uses: actions/github-script@v6
         with:
-          # github-token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             github.rest.repos.deleteAnEnvironment({
               owner: context.repo.owner,
