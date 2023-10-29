@@ -29,16 +29,6 @@ jobs:
             github.rest.repos.createOrUpdateEnvironment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              environment_name: 'test'
+              environment_name: 'test',
+              wait_timer: 1
             })
-      
-      - name: Check with curl
-        shell: bash
-        run: |
-          curl -L \
-          -X PUT \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ steps.generate_token.outputs.token }}" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/mrmxyzptlk1/test/environments/test \
-          -d '{"wait_timer":1}'
