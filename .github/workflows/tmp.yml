@@ -1,56 +1,30 @@
-name: "branch deploy demo"
+name: "Commit with app"
 
-# The workflow to execute on is comments that are newly created
-#on:
-#  issue_comment:
-#    types: [created]
-
-# Permissions needed for reacting and adding comments for IssueOps commands
-permissions:
-  pull-requests: write
-  deployments: write
-  contents: write
-  checks: write
+on:
+  pull_request:
+    types: [labeled]
 
 jobs:
   demo:
-    if: ${{ github.event.issue.pull_request }} # only run on pull request comments
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      #- name: get sha from PR number and save output
-       # id: get-sha
-        #uses: actions/github-script@v3
-        #with:
-         # github-token: ${{ secrets.GITHUB_TOKEN }}
-          #script: |
-           # console.log('PR number: ' + ${{ github.event.issue.number }})
-            #const pr = await github.pulls.get({
-             # owner: context.repo.owner,
-              #repo: context.repo.repo,
-              #pull_number: ${{ github.event.issue.number }}
-            #})
-            #console.log('PR Head sha: ' + pr.data.head.sha)
-            #core.setOutput('sha', pr.data.head.sha)
-
-      - name: Report tests check
-        uses: actions/github-script@v3
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.checks.create({
-              name: 'Status check one',
-              head_sha: '${{ steps.get-sha.outputs.sha }}',
-              status: 'completed',
-              conclusion: 'success',
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            })
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+          permissions: "contents:write"
+    
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Create report file
         run: date +%s > report.txt
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          branch: feature-123
+          commit_user_name: ghapp-mrmxyzptlk1[bot]
+          commit_user_email: 148899933+ghapp-mrmxyzptlk1[bot]
