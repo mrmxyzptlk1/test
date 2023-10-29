@@ -18,11 +18,10 @@ module.exports = async ({core, fetch}) => {
       installationId: installationId,
       request: request.defaults({
         baseUrl: baseUrl,
-        fetch: fetch
+        request: {
+          fetch: fetch
+        }
       })
-    },
-    request: {
-      fetch: fetch
     }
   });
   
