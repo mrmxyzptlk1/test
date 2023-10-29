@@ -19,7 +19,10 @@ module.exports = async ({core, fetch}) => {
       request: request.defaults({
         baseUrl: baseUrl,
         fetch: fetch
-      }),
+      })
+    },
+    request: {
+      fetch: fetch
     }
   });
   
