@@ -30,7 +30,7 @@ runs:
   
     - name: Install dependencies
       shell: bash
-      run: npm install jsonwebtoken @octokit/auth-app @octokit/rest
+      run: npm install @octokit/auth-app @octokit/rest @octokit/request
 
     #- name: Get jwt
     #  id: get_jwt
