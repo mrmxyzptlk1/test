@@ -51,6 +51,10 @@ jobs:
     steps:
       - run: echo "auto_merge!"
 
+  cleanup:
+    needs: auto_merge
+    runs-on: ubuntu-latest
+    steps:
       - name: Generate app token
         id: generate_token
         uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
