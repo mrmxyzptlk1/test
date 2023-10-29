@@ -7,13 +7,17 @@ module.exports = async ({core, fetch}) => {
   const privateKey = process.env.APPLICATION_PRIVATE_KEY;
   const appId = process.env.APPLICATION_ID;
   const repository_id = process.env.REPOSITORY_ID;
+  const baseUrl = process.env.GITHUB_API_URL;
 
   const appOctokit = new Octokit({
     authStrategy: createAppAuth,
     auth: {
       appId: appId,
       privateKey: privateKey,
-      installationId: installationId
+      installationId: installationId,
+      request: request.defaults({
+        baseUrl: baseUrl
+      }),
     },
     request: { fetch }
   });
