@@ -1,0 +1,60 @@
+name: Generate app installation access token
+description: Creates an installation access token with selected permissions from Github app ... installed on org 
+
+inputs:
+  app_id:
+    required: true
+  app_private_key:
+    required: true
+  app_installation_id:
+    required: true
+  permissions:
+    description: "Comma separated list of permissions, e.g. contents:write,issues:read."
+    required: true
+
+outputs:
+  token:
+    description: "App installation access token"
+    value: ${{ steps.generate_token.outputs.token }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        path: tmp
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+  
+    - name: Install dependencies
+      shell: bash
+      run: npm install @octokit/auth-app @octokit/rest @octokit/request
+
+    #- name: Get jwt
+    #  id: get_jwt
+    #  uses: actions/github-script@v6
+    #  env:
+    #    APPLICATION_ID: ${{ inputs.app_id }}
+    #    APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
+    #    APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+    #  with:
+    #    result-encoding: string
+    #    script: |
+    #      const script = require('./tmp/.github/scripts/get_jwt.js');
+    #      script({github, context, core});
+
+    - name: Generate Github app installation token with jwt
+      id: generate_token
+      uses: actions/github-script@v6
+      env:
+       APPLICATION_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+       APPLICATION_PRIVATE_KEY: ${{ inputs.app_private_key }}
+       APPLICATION_ID: ${{ inputs.app_id }}
+       REPOSITORY_ID: ${{ github.repository_id }}
+       PERMISSIONS: ${{ inputs.permissions }}
+      with:
+        script: |
+          const script = require('./tmp/.github/scripts/generate_app_token.js');
+          await script({core, fetch});

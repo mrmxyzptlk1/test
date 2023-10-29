@@ -1,0 +1,23 @@
+name: 'Hello World'
+description: 'Greet someone'
+
+inputs:
+  parameter1:  # id of input
+    description: 'Description'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        path: tmp
+    - name: Step 1
+      shell: bash
+      run: echo "Step 1"
+    - name: Step 2
+      if: ${{ inputs.parameter1 == true }}
+      shell: bash
+      run: echo "Step 2"
+    - name: Run action
+      uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a

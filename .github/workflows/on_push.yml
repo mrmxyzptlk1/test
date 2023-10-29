@@ -8,7 +8,9 @@ jobs:
     name: Composite action
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
       - name: Invoke my action
-        uses: ./.github/actions/push_to_main
+        uses: mrmxyzptlk1/test/.github/actions/push_to_main@main
+        with:
+          parameter1: 'true'
+
+      - uses: actions/checkout@v3

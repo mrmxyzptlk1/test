@@ -2,29 +2,62 @@ name: Auto merge
 
 on:
   pull_request:
-    types: [auto_merge_enabled, auto_merge_disabled]
-    #paths:
-    #  - 'folder1/**'
-    #  - 'folder2/**'
+    types: [ opened, reopened, synchronize, auto_merge_enabled, auto_merge_disabled, labeled ]
 
 jobs:
-  detect_change:
+  change_detected:
     runs-on: ubuntu-latest
+    outputs:
+      folder1: ${{ steps.filter.outputs.folder1 }}
+      folder2: ${{ steps.filter.outputs.folder2 }}
     steps:
-      - uses: actions/github-script@v6
+      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
+        id: filter
         with:
-          github-token: ${{ secrets.PAT }}
+          base: main
+          ref: feature/branch
+          filters: |
+            folder1:
+              - "folder1/**"
+            folder2:
+              - "folder2/**"
+
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
+        with:
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+          permissions: "administration:write"
+
+      - name: Create environment with github-script
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             github.rest.repos.createOrUpdateEnvironment({
-              owner: 'mrmxyzptlk1',
-              repo: 'test',
-              environment_name: 'PR #2',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment_name: 'test',
               wait_timer: 1
             })
 
   auto_merge:
-    needs: detect_change
+    if: ${{ !contains(needs.change_detected.outputs.*, 'false') }}
+    needs: change_detected
     runs-on: ubuntu-latest
     environment: 'PR #2'
     steps:
       - run: echo "auto_merge!"
+
+      - name: Delete environment with github-script
+        uses: actions/github-script@v6
+        with:
+          # github-token: ${{ steps.generate_token.outputs.token }}
+          script: |
+            github.rest.repos.deleteAnEnvironment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment_name: 'test'
+            })
