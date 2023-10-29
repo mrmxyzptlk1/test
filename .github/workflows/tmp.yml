@@ -28,3 +28,4 @@ jobs:
         with:
           commit_user_name: ghapp-mrmxyzptlk1[bot]
           commit_user_email: 148899933+ghapp-mrmxyzptlk1[bot]
+          commit_author: ghapp-mrmxyzptlk1[bot]
