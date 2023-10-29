@@ -20,7 +20,9 @@ module.exports = async ({core, fetch}) => {
         baseUrl: baseUrl
       }),
     },
-    request: { fetch }
+    request: {
+      fetch: fetch
+    }
   });
   
   permissions.trim();
