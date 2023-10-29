@@ -22,22 +22,24 @@ jobs:
             folder2:
               - "folder2/**"
 
-      - name: Get Token
-        id: get_workflow_token
-        uses: peter-murray/workflow-application-token-action@v2
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
         with:
-          application_id: ${{ secrets.APPLICATION_ID }}
-          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
           permissions: "administration:write"
-    
-      - uses: actions/github-script@v6
+
+      - name: Create environment with github-script
+        uses: actions/github-script@v6
         with:
-          github-token: ${{ steps.get_workflow_token.outputs.token }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             github.rest.repos.createOrUpdateEnvironment({
-              owner: 'mrmxyzptlk1',
-              repo: 'test',
-              environment_name: 'PR #2',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment_name: 'test',
               wait_timer: 1
             })
 
@@ -48,3 +50,14 @@ jobs:
     environment: 'PR #2'
     steps:
       - run: echo "auto_merge!"
+
+      - name: Delete environment with github-script
+        uses: actions/github-script@v6
+        with:
+          # github-token: ${{ steps.generate_token.outputs.token }}
+          script: |
+            github.rest.repos.deleteAnEnvironment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment_name: 'test'
+            })
