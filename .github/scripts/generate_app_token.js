@@ -1,6 +1,7 @@
 module.exports = async ({core, fetch}) => {
   const { Octokit } = require("@octokit/rest");
   const { createAppAuth } = require("@octokit/auth-app");
+  const { request } = require("@octokit/request");
   
   const installationId = process.env.APPLICATION_INSTALLATION_ID;
   const permissions = process.env.PERMISSIONS;
