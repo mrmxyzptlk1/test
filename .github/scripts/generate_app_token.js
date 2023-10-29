@@ -17,11 +17,9 @@ module.exports = async ({core, fetch}) => {
       privateKey: privateKey,
       installationId: installationId,
       request: request.defaults({
-        baseUrl: baseUrl
+        baseUrl: baseUrl,
+        fetch: fetch
       }),
-    },
-    request: {
-      fetch: fetch
     }
   });
   
