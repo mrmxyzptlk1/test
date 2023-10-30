@@ -8,4 +8,4 @@ jobs:
     name: Composite action
     runs-on: ubuntu-latest
     steps:
-      - run: echo "run"
+      - run: echo "${{ toJson(github.event.sender) }}"
