@@ -9,4 +9,4 @@ jobs:
     name: Check email
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ toJson(github.event.pull_request.user) }}"
+      - run: echo "${{ toJson(github.event.sender) }}"
