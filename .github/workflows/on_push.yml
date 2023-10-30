@@ -1,12 +1,16 @@
 name: "Run composite action"
 
 on:
-  pull_request:
-    types: [labeled]
+  push:
 
 jobs:
   check:
     name: Check email
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ toJson(github.event.sender) }}"
+      - name: Test
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const data = github.rest.users.listPublicEmailsForAuthenticated();
+            console.log(data);
