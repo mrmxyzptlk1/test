@@ -4,13 +4,9 @@ on:
   push:
 
 jobs:
-  check:
-    name: Check email
+  test:
+    name: test
     runs-on: ubuntu-latest
+    environment: test
     steps:
-      - name: Test
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const data = github.rest.users.listPublicEmailsForAuthenticated();
-            console.log(data);
+      - run: echo "test"
