@@ -7,6 +7,9 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
-    environment: test
     steps:
-      - run: echo "test"
+      - uses: chinthakagodawita/autoupdate-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: "true"
+          PR_FILTER: "auto_merge"
