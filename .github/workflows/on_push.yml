@@ -8,7 +8,7 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
-      - uses: chinthakagodawita/autoupdate-action@v1
+      - uses: docker://chinthakagodawita/autoupdate-action:v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRY_RUN: "true"
