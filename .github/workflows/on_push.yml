@@ -1,12 +1,39 @@
-name: "Run composite action"
+name: "Test filtering"
 
 on:
   pull_request:
-    types: [labeled]
 
 jobs:
-  check:
-    name: Check email
+  changes:
+    name: Detect changes
     runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.filter.outputs.changes }}
     steps:
-      - run: echo "${{ toJson(github.event.sender) }}"
+      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
+        id: filter
+        with:
+          filters: |
+            folder_one:
+              - "folder1/**"
+            folder_two:
+              - "folder2/**"
+
+  test:
+    name: test
+    needs: changes
+    runs-on: ubuntu-latest
+    env:
+      CONDITION_TWO_CHECK: ${{ needs.changes.outputs.changes != '[]' }}
+      FULL_CONDITION: ${{ !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
+        needs.changes.outputs.changes != '[]'}}
+    steps:
+      - if: ${{ !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) && needs.check_functions.outputs.changed_functions != '[]' }}
+        name: Test condition
+        run: echo "pass"
+    
+      #- uses: docker://chinthakagodawita/autoupdate-action:v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    DRY_RUN: "true"
+      #    PR_FILTER: "auto_merge"
