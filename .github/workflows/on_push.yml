@@ -28,6 +28,7 @@ jobs:
       FULL_CONDITION: ${{ !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
         needs.changes.outputs.changes != '[]'}}
       TEST: fromJSON('false')
+    environment: ${{ needs.changes.outputs.changes != '[]' && 'PR ${{ github.event.number }}' || '' }}
     steps:
       - if: fromJSON(
               !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
