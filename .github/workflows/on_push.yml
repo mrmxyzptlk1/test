@@ -22,7 +22,7 @@ jobs:
 
       - if: steps.filter.outputs.changes != '[]'
         id: env_name
-        run: echo "environment="PR #${{ github.event.number }}" >> "$GITHUB_OUTPUT"
+        run: echo "environment=PR #${{ github.event.number }}" >> "$GITHUB_OUTPUT"
 
   test:
     name: test
