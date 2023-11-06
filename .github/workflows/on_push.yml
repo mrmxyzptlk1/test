@@ -27,8 +27,9 @@ jobs:
       CONDITION_TWO_CHECK: ${{ needs.changes.outputs.changes != '[]' }}
       FULL_CONDITION: ${{ !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
         needs.changes.outputs.changes != '[]'}}
+      TEST: fromJSON('false')
     steps:
-      - if: ${{ env.FULL_CONDITION }}
+      - if: ${{ fromJSON('false') }}
         name: Test condition
         run: echo "pass"
     
