@@ -29,6 +29,8 @@ jobs:
     needs: changes
     runs-on: ubuntu-latest
     environment: ${{ needs.changes.outputs.changes != '[]' && format('PR {0}', github.event.number) || '' }}
+    if: needs.changes.outputs.changes == '[]' ||
+        (needs.changes.outputs.changes != '[]')
     steps:
       - if: fromJSON(!contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action)) &&
             needs.changes.outputs.changes != '[]'
