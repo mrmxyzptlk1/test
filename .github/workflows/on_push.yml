@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changes: ${{ steps.filter.outputs.changes }}
+      environment: ${{ steps.env_name.outputs.environment }}
     steps:
       - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
         id: filter
@@ -19,6 +20,9 @@ jobs:
             folder_two:
               - "folder2/**"
 
+      - id: env_name
+        run: echo "{environment}={PR #${{ github.event.number }}}" >> "$GITHUB_OUTPUT"
+
   test:
     name: test
     needs: changes
@@ -28,12 +32,10 @@ jobs:
       FULL_CONDITION: ${{ !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
         needs.changes.outputs.changes != '[]'}}
       TEST: fromJSON('false')
-    environment: ${{ needs.changes.outputs.changes != '[]' && 'PR ${{ github.event.number }}' || '' }}
+    environment: ${{ needs.changes.outputs.changes != '[]' && needs.changes.outputs.environment || '' }}
     steps:
-      - if: fromJSON(
-              !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
-              needs.changes.outputs.changes != '[]'
-            )
+      - if: fromJSON(!contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action)) &&
+            needs.changes.outputs.changes != '[]'
         name: Test condition
         run: echo "pass"
     
