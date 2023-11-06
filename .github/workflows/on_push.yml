@@ -29,7 +29,10 @@ jobs:
         needs.changes.outputs.changes != '[]'}}
       TEST: fromJSON('false')
     steps:
-      - if: ${{ fromJSON('false') }}
+      - if: fromJSON(
+              !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
+              needs.changes.outputs.changes != '[]'
+            )
         name: Test condition
         run: echo "pass"
     
