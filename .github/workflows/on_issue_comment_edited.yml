@@ -17,20 +17,18 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number,
             });
-            console.log(data);
-            console.log(data.head.sha);
-
-      - name: Get check_run_id
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const { data  } = await github.rest.checks.listForRef({
+            const ref = data.head.sha;
+            console.log(ref);
+            
+            const { data } = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: '604ff03f569c116c9859737240b2b4c539ec4d5d',
+              ref: ref,
             });
             console.log(data);
             console.log(data.check_runs.find(({ name }) => name === 'test')?.id);
+            const check_run_id = data.check_runs.find(({ name }) => name === 'test')?.id
+            console.log(check_run_id);
 
   issue_comment_edited:
     if: |
