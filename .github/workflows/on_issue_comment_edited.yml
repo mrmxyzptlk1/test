@@ -12,15 +12,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const id = await github.rest.checks.listForRef({
+            const run = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: '604ff03f569c116c9859737240b2b4c539ec4d5d',
+              run_id: '${{ github.run_id }}'
             });
-            console.log(id);
-            console.log(id.check_runs);
-            console.log(id.check_runs[0]);
-            console.log(id.check_runs[1]);
+            console.log(run);
       
       #- name: Get sha
       #  uses: actions/github-script@v6
