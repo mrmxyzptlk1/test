@@ -6,7 +6,7 @@ on:
 
 jobs:
   issue_comment_edited:
-    if: startsWith(github.event.comment.body, 'Test comment:') && contains(github.event.comment.body, '2. - [x]')
+    if: startsWith(github.event.comment.body, 'Automatic PR merge process:') && contains(github.event.comment.body, '- [x] Select')
     name: Issue comment edited
     runs-on: ubuntu-latest
     env:
@@ -29,4 +29,4 @@ jobs:
         run: |
           echo "${{ startsWith( github.event.comment.body, 'Test comment:' ) }}"
           echo "${{ contains( github.event.comment.body, '[x]' ) }}"
-          echo "${{ startsWith( github.event.comment.body, 'Test comment:' ) && contains( github.event.comment.body, '[x]' ) }}"
+          echo "${{ startsWith(github.event.comment.body, 'Automatic PR merge process:') && contains(github.event.comment.body, '- [x] Select') }}"
