@@ -12,12 +12,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const run = await github.rest.actions.listJobsForWorkflowRun({
+            const { data } = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: '${{ github.run_id }}'
             });
-            console.log(run);
+            console.log(data);
       
       #- name: Get sha
       #  uses: actions/github-script@v6
