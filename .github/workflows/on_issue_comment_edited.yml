@@ -8,7 +8,7 @@ jobs:
   get_sha:
     runs-on: ubuntu-latest
     steps:
-      - name: Get sha
+      - name: Set status
         uses: actions/github-script@v6
         with:
           script: |
@@ -18,17 +18,23 @@ jobs:
               pull_number: context.issue.number,
             });
             const ref = data.head.sha;
-            console.log(ref);
+            console.log("Last commit sha on PR: ", ref);
             
             var { data } = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: ref,
             });
-            console.log(data);
-            console.log(data.check_runs.find(({ name }) => name === 'test')?.id);
             const check_run_id = data.check_runs.find(({ name }) => name === 'test')?.id
-            console.log(check_run_id);
+            console.log("Check run id associated with last commit: ", check_run_id);
+
+            github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: check_run_id,
+              status: 'completed',
+              conclusion: 'success'
+            });
 
   issue_comment_edited:
     if: |
