@@ -1,0 +1,25 @@
+name: "PR merging"
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+    
+      - name: Update pull request branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.pulls.updateBranch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              expected_head_sha: context.payload.pull_request.head.sha
+            });
+
+      - name: Check
+        run: git diff $(git merge-base main)
