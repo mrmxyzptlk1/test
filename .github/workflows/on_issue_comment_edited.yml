@@ -6,7 +6,7 @@ on:
 
 jobs:
   issue_comment_edited:
-    if: startsWith( '${{ github.event.comment.body }}', 'Test comment:' ) && contains( '${{ github.event.comment.body }}', '[x]' )
+    if: startsWith( "${{ github.event.comment.body }}", "Test comment:" ) && contains( "${{ github.event.comment.body }}", "[x]" )
     name: Issue comment edited
     runs-on: ubuntu-latest
     env:
@@ -20,3 +20,7 @@ jobs:
           echo "${{ startsWith( env.BODY, 'Test comment:' ) }}"
           echo "${{ contains( env.BODY, '[x]' ) }}"
           echo "${{ startsWith( env.BODY, 'Test comment:' ) && contains( env.BODY, '[x]' ) }}"
+
+      - name: Check 1
+        if: "${{ startsWith( env.BODY, 'Test comment:' ) && contains( env.BODY, '[x]' ) }}"
+        run: echo "check 1"
