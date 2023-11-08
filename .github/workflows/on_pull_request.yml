@@ -4,8 +4,8 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Test
+  pr_merging_test:
+    name: PR merging test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
