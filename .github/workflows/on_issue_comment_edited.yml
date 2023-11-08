@@ -24,12 +24,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { check_runs } = await github.rest.checks.listForRef({
+            const { data  } = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: '604ff03f569c116c9859737240b2b4c539ec4d5d',
             });
-            console.log(check_runs);
+            console.log(data);
+            console.log(data.check_runs.find(({ name }) => name === 'test')?.id);
 
   issue_comment_edited:
     if: |
