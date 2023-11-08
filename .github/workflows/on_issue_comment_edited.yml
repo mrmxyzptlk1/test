@@ -6,22 +6,30 @@ on:
 
 jobs:
   get_sha:
-    permissions:
-      contents: read
-      pull-requests: read
     runs-on: ubuntu-latest
     steps:
-      - name: Get sha
+      - name: Get check_run_id
         uses: actions/github-script@v6
         with:
           script: |
-            const pr = await github.rest.pulls.get({
+            const id = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: context.issue.number,
+              ref: '604ff03f569c116c9859737240b2b4c539ec4d5d',
             });
-            console.log(pr);
-            console.log(pr.data.head.sha);
+            console.log(id);
+      
+      #- name: Get sha
+      #  uses: actions/github-script@v6
+      #  with:
+      #    script: |
+      #      const pr = await github.rest.pulls.get({
+      #        owner: context.repo.owner,
+      #        repo: context.repo.repo,
+      #        pull_number: context.issue.number,
+      #      });
+      #      console.log(pr);
+      #      console.log(pr.data.head.sha);
 
   issue_comment_edited:
     if: |
