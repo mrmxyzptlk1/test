@@ -8,17 +8,6 @@ jobs:
   get_sha:
     runs-on: ubuntu-latest
     steps:
-      - name: Get check_run_id
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const { data } = await github.rest.checks.listForRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: '604ff03f569c116c9859737240b2b4c539ec4d5d',
-            });
-            console.log(data);
-      
       - name: Get sha
         uses: actions/github-script@v6
         with:
@@ -29,7 +18,18 @@ jobs:
               pull_number: context.issue.number,
             });
             console.log(data);
-            console.log(pr.data.head.sha);
+            console.log(data.head.sha);
+
+      - name: Get check_run_id
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { check_runs } = await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: '604ff03f569c116c9859737240b2b4c539ec4d5d',
+            });
+            console.log(check_runs);
 
   issue_comment_edited:
     if: |
