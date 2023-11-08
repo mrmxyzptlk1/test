@@ -24,3 +24,9 @@ jobs:
       - name: Check 1
         if: "${{ startsWith( env.BODY, 'Test comment:' ) && contains( env.BODY, '[x]' ) }}"
         run: echo "check 1"
+
+      - name: Other check
+        run: |
+          echo "${{ startsWith( github.event.comment.body, 'Test comment:' ) }}"
+          echo "${{ contains( github.event.comment.body, '[x]' ) }}"
+          echo "${{ startsWith( github.event.comment.body, 'Test comment:' ) && contains( github.event.comment.body, '[x]' ) }}"
