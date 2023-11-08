@@ -1,0 +1,13 @@
+name: "Issue comment edited"
+
+on:
+  issue_comment:
+    types: [edited]
+
+jobs:
+  issue_comment_edited:
+    name: Issue comment edited
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check comment body
+        run: echo ${{ github.event.comment.body }}
