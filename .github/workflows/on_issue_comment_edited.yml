@@ -8,14 +8,12 @@ jobs:
   issue_comment_edited:
     name: Issue comment edited
     runs-on: ubuntu-latest
-    env:
-      STARTS_WITH: ${{ startsWith( github.event.comment.body, "Test comment:" ) }}
-      CONTAINS: ${{ contains( github.event.comment.body, "[x]" ) }}
-      BOTH: ${{ startsWith( github.event.comment.body, "Test comment:" ) && contains( github.event.comment.body, "[x]" ) }}
     steps:
       - name: Check comment body
         run: echo "${{ github.event.comment.body }}"
 
       - name: Check conditions
         run: |
-          echo "test"
+          echo "${{ startsWith( github.event.comment.body, "Test comment:" ) }}"
+          echo "${{ contains( github.event.comment.body, "[x]" ) }}"
+          echo "${{ startsWith( github.event.comment.body, "Test comment:" ) && contains( github.event.comment.body, "[x]" ) }}"
