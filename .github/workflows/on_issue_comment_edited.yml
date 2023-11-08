@@ -21,7 +21,7 @@ jobs:
               pull_number: context.issue.number,
             });
             console.log(pr);
-            console.log(pr.head.sha);
+            console.log(pr.data.head.sha);
 
   issue_comment_edited:
     if: |
