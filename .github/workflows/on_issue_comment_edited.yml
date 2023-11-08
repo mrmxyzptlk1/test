@@ -14,7 +14,6 @@ jobs:
       - name: Get sha
         uses: actions/github-script@v6
         with:
-          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
