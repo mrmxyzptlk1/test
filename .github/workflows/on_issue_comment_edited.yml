@@ -5,6 +5,25 @@ on:
     types: [edited]
 
 jobs:
+  get_sha:
+    permissions:
+      contents: read
+      pull-requests: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get sha
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            console.log(pr);
+            console.log(pr.head.sha);
+
   issue_comment_edited:
     if: |
       github.event.issue.pull_request &&
