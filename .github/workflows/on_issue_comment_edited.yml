@@ -12,21 +12,21 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { data } = await github.rest.pulls.get({
+            const { pr_data } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
             });
-            const ref = data.head.sha;
+            const ref = pr_data.head.sha;
             console.log(ref);
             
-            const { data } = await github.rest.checks.listForRef({
+            const { check_runs_data } = await github.rest.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: ref,
             });
-            console.log(data);
-            console.log(data.check_runs.find(({ name }) => name === 'test')?.id);
+            console.log(check_runs_data);
+            console.log(check_runs_data.check_runs.find(({ name }) => name === 'test')?.id);
             const check_run_id = data.check_runs.find(({ name }) => name === 'test')?.id
             console.log(check_run_id);
 
