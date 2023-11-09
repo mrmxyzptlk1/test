@@ -13,11 +13,19 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            response = await github.rest.pulls.checkIfMerged({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
+            try {
+              await github.rest.pulls.checkIfMerged({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number
+              });
+            } catch (error) {
+              if (error.status) {
+                console.log(error.status);
+              } else {
+                throw error
+              }
+            }
             console.log(response);
     
       #- name: Find Comment
