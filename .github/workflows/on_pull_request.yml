@@ -29,13 +29,15 @@ jobs:
             });
             console.log(data);
             console.log(data.behind_by);
-          
-            github.rest.pulls.updateBranch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number,
-              expected_head_sha: context.payload.pull_request.head.sha
-            });
+
+            if (data.behind_by > 0) {
+              github.rest.pulls.updateBranch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                expected_head_sha: context.payload.pull_request.head.sha
+              });
+            }
 
       #- name: Check mergability
       #  run: |
