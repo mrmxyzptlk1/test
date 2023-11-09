@@ -5,7 +5,36 @@ on:
     types: [edited]
 
 jobs:
-  get_sha:
+  create_comment:
+    if: github.event_name == 'issue_comment'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'Automatic PR merge process:'
+  
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Automatic PR merge process:
+
+            - For automatic PR merge use **Enable auto-merge (squash)** button below or
+            - [ ] Select the checkbox to force PR merge
+          edit-mode: replace
+
+  issue_comment_edited:
+    if: |
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, 'Automatic PR merge process:') &&
+      contains(github.event.comment.body, '- [x] Select')
+    name: Issue comment edited
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,32 +45,3 @@ jobs:
           script: |
             const script = require('./.github/scripts/set_status_check.js');
             await script({github, context});
-
-  issue_comment_edited:
-    if: |
-      github.event.issue.pull_request &&
-      startsWith(github.event.comment.body, 'Automatic PR merge process:') &&
-      contains(github.event.comment.body, '- [x] Select')
-    name: Issue comment edited
-    runs-on: ubuntu-latest
-    env:
-      BODY: "${{ github.event.comment.body }}"
-    steps:
-      - name: Check comment body
-        run: echo "${{ env.BODY }}"
-
-      - name: Check conditions
-        run: |
-          echo "${{ startsWith( env.BODY, 'Test comment:' ) }}"
-          echo "${{ contains( env.BODY, '[x]' ) }}"
-          echo "${{ startsWith( env.BODY, 'Test comment:' ) && contains( env.BODY, '[x]' ) }}"
-
-      - name: Check 1
-        if: "${{ startsWith( env.BODY, 'Test comment:' ) && contains( env.BODY, '[x]' ) }}"
-        run: echo "check 1"
-
-      - name: Other check
-        run: |
-          echo "${{ startsWith( github.event.comment.body, 'Test comment:' ) }}"
-          echo "${{ contains( github.event.comment.body, '[x]' ) }}"
-          echo "${{ startsWith(github.event.comment.body, 'Automatic PR merge process:') && contains(github.event.comment.body, '- [x] Select') }}"
