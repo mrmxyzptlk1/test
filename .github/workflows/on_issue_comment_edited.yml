@@ -24,7 +24,7 @@ jobs:
                 console.log(error.status);
                 if (error.status = 404) {
                   console.log("PR was not merged");
-                } else if (time < 204) {
+                } else if (time = 204) {
                   console.log("PR was successfully merged");
                 }
               } else {
