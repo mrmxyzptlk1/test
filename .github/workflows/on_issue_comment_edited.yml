@@ -33,7 +33,7 @@ jobs:
 
   issue_comment_edited:
     if: |
-      github.event.issue.pull_request &&
+      github.event_name == 'issue_comment' && github.event.issue.pull_request &&
       startsWith(github.event.comment.body, 'PR merge blocked because') &&
       contains(github.event.comment.body, '- [x] To force PR merge')
     name: Issue comment edited
