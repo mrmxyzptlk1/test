@@ -13,7 +13,10 @@ jobs:
 
       - name: Echo context
         run: |
-          echo "${{ toJson(github.event) }}"
+          echo "${{ github.event.pull_request.merge_commit_sha }}"
+          echo "${{ github.event.pull_request.mergeable }}"
+          echo "${{ github.event.pull_request.mergeable_state }}"
+          echo "${{ github.event.pull_request.merged }}"
     
       - name: Update pull request branch
         uses: actions/github-script@v6
