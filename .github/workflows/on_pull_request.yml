@@ -13,7 +13,7 @@ jobs:
 
       - name: Echo context
         run: |
-          echo ${{ toJson(github.event) }}
+          echo "${{ toJson(github.event) }}"
     
       - name: Update pull request branch
         uses: actions/github-script@v6
