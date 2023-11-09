@@ -20,6 +20,6 @@ module.exports = async ({}) => {
     repo: context.repo.repo,
     check_run_id: check_run_id,
     status: 'completed',
-    conclusion: 'success'
+    conclusion: 'skipped'
   });
 }
