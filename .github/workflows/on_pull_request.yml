@@ -32,13 +32,13 @@ jobs:
       - name: Check mergability
         run: |
           if git merge-base --is-ancestor main @
-            then
-              echo "Your branch is up to date."
-              exit 0
-            else
-              echo "You need to merge / rebase."
-              exit 1
-            fi
+          then
+            echo "Your branch is up to date."
+            exit 0
+          else
+            echo "You need to merge / rebase."
+            exit 1
+          fi
       
       - name: Check
         run: git diff $(git merge-base main)
