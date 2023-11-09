@@ -25,7 +25,7 @@ jobs:
             var { data } = await github.rest.repos.compareCommitsWithBasehead({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              basehead: main...feat/test2
+              basehead: 'main...feat/test2'
             });
             console.log(data);
             console.log(data.behind_by);
