@@ -22,6 +22,14 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            var { data } = await github.rest.repos.compareCommitsWithBasehead({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              basehead: main...feat/test2
+            });
+            console.log(data);
+            console.log(data.behind_by);
+          
             github.rest.pulls.updateBranch({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -29,16 +37,16 @@ jobs:
               expected_head_sha: context.payload.pull_request.head.sha
             });
 
-      - name: Check mergability
-        run: |
-          if git merge-base --is-ancestor main feat/test2
-          then
-            echo "Your branch is up to date."
-            exit 0
-          else
-            echo "You need to merge / rebase."
-            exit 1
-          fi
+      #- name: Check mergability
+      #  run: |
+      #    if git merge-base --is-ancestor main feat/test2
+      #    then
+      #      echo "Your branch is up to date."
+      #      exit 0
+      #    else
+      #      echo "You need to merge / rebase."
+      #      exit 1
+      #    fi
       
       - name: Check
         run: git diff $(git merge-base main)
