@@ -22,11 +22,15 @@ jobs:
             } catch (error) {
               if (error.status) {
                 console.log(error.status);
+                if (error.status = 404) {
+                  console.log("PR was not merged");
+                } else if (time < 204) {
+                  console.log("PR was successfully merged");
+                }
               } else {
                 throw error
               }
             }
-            console.log(response);
     
       #- name: Find Comment
       #  uses: peter-evans/find-comment@v2
