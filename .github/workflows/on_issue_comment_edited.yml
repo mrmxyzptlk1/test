@@ -17,7 +17,7 @@ jobs:
               await github.rest.pulls.checkIfMerged({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: context.issue.number
+                pull_number: '3'
               });
             } catch (error) {
               if (error.status) {
