@@ -9,27 +9,38 @@ jobs:
     if: github.event_name == 'issue_comment'
     runs-on: ubuntu-latest
     steps:
-      - name: Find Comment
-        uses: peter-evans/find-comment@v2
-        id: find_comment
+      - name: Check PR emrge status
+        uses: actions/github-script@v6
         with:
-          issue-number: ${{ github.event.issue.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: 'PR merge blocked because'
+          script: |
+            response = github.rest.pulls.checkIfMerged({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            console.log(response);
+    
+      #- name: Find Comment
+      #  uses: peter-evans/find-comment@v2
+      #  id: find_comment
+      #  with:
+      #    issue-number: ${{ github.event.issue.number }}
+      #    comment-author: 'github-actions[bot]'
+      #    body-includes: 'PR merge blocked because'
   
-      - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v3
-        with:
-          comment-id: ${{ steps.find_comment.outputs.comment-id }}
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            PR merge blocked because this.
-            
-            Automatic PR merge process:
+      #- name: Create or update comment
+      #  uses: peter-evans/create-or-update-comment@v3
+      #  with:
+      #    comment-id: ${{ steps.find_comment.outputs.comment-id }}
+      #    issue-number: ${{ github.event.issue.number }}
+      #    body: |
+      #      PR merge blocked because this.
+      #      
+      #      Automatic PR merge process:
 
-            - For automatic PR merge use **Enable auto-merge (squash)** button below or
-            - [ ] To force PR merge select the checkbox
-          edit-mode: replace
+      #      - For automatic PR merge use **Enable auto-merge (squash)** button below or
+      #      - [ ] To force PR merge select the checkbox
+      #    edit-mode: replace
 
   issue_comment_edited:
     if: |
