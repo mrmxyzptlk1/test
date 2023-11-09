@@ -13,7 +13,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            response = github.rest.pulls.checkIfMerged({
+            response = await github.rest.pulls.checkIfMerged({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number
