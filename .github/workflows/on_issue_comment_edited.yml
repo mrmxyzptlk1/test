@@ -14,7 +14,7 @@ jobs:
         with:
           script: |
             try {
-              await github.rest.pulls.checkIfMerged({
+              response = await github.rest.pulls.checkIfMerged({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: '3'
@@ -31,6 +31,7 @@ jobs:
                 throw error
               }
             }
+            console.log(response);
     
       #- name: Find Comment
       #  uses: peter-evans/find-comment@v2
