@@ -19,15 +19,25 @@ jobs:
                 repo: context.repo.repo,
                 pull_number: context.issue.number
               });
+              if (response.status = 204) {
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: 'PR was successfully merged!'
+                });
+              }
             } catch (error) {
               if (error.status = 404) {
-                console.log("PR was not merged");
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: 'PR was not merged!'
+                });
               } else {
                 throw error
               }
-            }
-            if (response.status = 204) {
-              console.log("PR was successfully merged");
             }
     
       #- name: Find Comment
