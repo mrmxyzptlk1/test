@@ -15,7 +15,7 @@ jobs:
         with:
           script: |
             const script = require('./.github/scripts/set_status_check.js');
-            await script({core, fetch});
+            await script({github, context});
 
   issue_comment_edited:
     if: |
