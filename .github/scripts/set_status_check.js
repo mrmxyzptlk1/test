@@ -1,4 +1,4 @@
-module.exports = async ({}) => {
+module.exports = async ({github, context}) => {
   var { data } = await github.rest.pulls.get({
     owner: context.repo.owner,
     repo: context.repo.repo,
