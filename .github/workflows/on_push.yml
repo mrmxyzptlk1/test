@@ -23,7 +23,7 @@ jobs:
           github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             try {
-              github.rest.repos.deleteAnEnvironment({
+              response = await github.rest.repos.deleteAnEnvironment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 environment_name: 'test'
