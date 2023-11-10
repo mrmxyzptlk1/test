@@ -22,8 +22,16 @@ jobs:
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
           script: |
-            github.rest.repos.deleteAnEnvironment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              environment_name: 'test'
-            })
+            try {
+              github.rest.repos.deleteAnEnvironment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                environment_name: 'test'
+              });
+            } catch (error) {
+              if (error.status == 404) {
+                console.log("Environment does not exist.");
+              } else {
+                throw error
+              }
+            }
