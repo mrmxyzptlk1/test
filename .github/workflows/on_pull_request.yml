@@ -11,7 +11,7 @@ jobs:
     steps:
       #- uses: actions/checkout@v3
 
-      - run: echo "${{ github.actor }}
+      - run: echo "${{ github.actor }}"
 
       - name: Check
         if: github.actor == 'mrmxyzptlk1' && github.event.pull_request.auto_merge
