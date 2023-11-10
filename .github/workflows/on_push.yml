@@ -1,39 +1,29 @@
 name: "Test filtering"
 
 on:
-  pull_request:
+  push:
 
 jobs:
-  changes:
-    name: Detect changes
-    runs-on: ubuntu-latest
-    outputs:
-      changes: ${{ steps.filter.outputs.changes }}
-    steps:
-      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
-        id: filter
-        with:
-          filters: |
-            folder_one:
-              - "folder1/**"
-            folder_two:
-              - "folder2/**"
-
   test:
-    name: test
-    needs: changes
+    name: Test env deletion
     runs-on: ubuntu-latest
-    env:
-      CONDITION_TWO_CHECK: ${{ needs.changes.outputs.changes != '[]' }}
-      FULL_CONDITION: ${{ !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) &&
-        needs.changes.outputs.changes != '[]'}}
     steps:
-      - if: ${{ !contains(fromJSON('["auto_merge_enabled, auto_merge_disabled"]'), github.event.action) && needs.check_functions.outputs.changed_functions != '[]' }}
-        name: Test condition
-        run: echo "pass"
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
+        with:
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+          permissions: "administration:write"
     
-      #- uses: docker://chinthakagodawita/autoupdate-action:v1
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #    DRY_RUN: "true"
-      #    PR_FILTER: "auto_merge"
+      - name: Delete environment
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
+          script: |
+            github.rest.repos.deleteAnEnvironment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment_name: 'test'
+            })
