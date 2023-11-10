@@ -46,6 +46,4 @@ jobs:
       #      echo "You need to merge / rebase."
       #      exit 1
       #    fi
-      
-      #- name: Check
-      #  run: git diff $(git merge-base main)
+
