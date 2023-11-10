@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      #pull-requests: write
+      pull-requests: write
     steps:
       - name: Update pull request branch
         uses: actions/github-script@v6
