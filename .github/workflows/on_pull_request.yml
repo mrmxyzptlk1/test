@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
+      #pull-requests: write
     steps:
       - name: Update pull request branch
         uses: actions/github-script@v6
@@ -32,3 +32,19 @@ jobs:
                 expected_head_sha: context.payload.pull_request.head.sha
               });
             }
+
+            #const query = `mutation($pr_node_id:String!, $body:String!) {
+            #    disablePullRequestAutoMerge(input: {pullRequestId:$pr_node_id}) {
+            #      commentEdge{
+            #        node {
+            #          id
+            #        }
+            #      }
+            #    }
+            #  }`;
+            #  const variables = {
+            #      pr_node_id:'${{steps.vars.outputs.pr-node-id}}',
+            #      body:'Workflow started!',
+            #  }
+            #  const result = await github.graphql(query, variables)
+            #  console.log(result)
