@@ -33,18 +33,18 @@ jobs:
               });
             }
 
-            #const query = `mutation($pr_node_id:String!, $body:String!) {
-            #    disablePullRequestAutoMerge(input: {pullRequestId:$pr_node_id}) {
-            #      commentEdge{
-            #        node {
-            #          id
-            #        }
-            #      }
-            #    }
-            #  }`;
-            #  const variables = {
-            #      pr_node_id:'${{steps.vars.outputs.pr-node-id}}',
-            #      body:'Workflow started!',
-            #  }
-            #  const result = await github.graphql(query, variables)
-            #  console.log(result)
+#const query = `mutation($pr_node_id:String!, $body:String!) {
+#    disablePullRequestAutoMerge(input: {pullRequestId:$pr_node_id}) {
+#      commentEdge{
+#        node {
+#          id
+#        }
+#      }
+#    }
+#  }`;
+#  const variables = {
+#      pr_node_id:'${{steps.vars.outputs.pr-node-id}}',
+#      body:'Workflow started!',
+#  }
+#  const result = await github.graphql(query, variables)
+#  console.log(result)
