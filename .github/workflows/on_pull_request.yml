@@ -5,49 +5,30 @@ on:
     types: [ synchronize ]
 
 jobs:
-  context_info:
-    name: Context info
+  merge_conflict:
+    name: Merge conflicts
     runs-on: ubuntu-latest
+    permissions:
+      #contents: read
+      pull-requests: write
     steps:
-      - run: echo "${{ github.actor }}"
+      - name: Update pull request branch
+        uses: actions/github-script@v6
+        with:
+          script: |
+            var { data } = await github.rest.repos.compareCommitsWithBasehead({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              basehead: '${{ github.base_ref }}...${{ github.head_ref }}'
+            });
+            console.log(data);
+            console.log(data.behind_by);
 
-      - name: Check
-        if: github.actor == 'mrmxyzptlk1' && github.event.pull_request.auto_merge
-        run: echo "test"
-
-      - name: Echo context
-        run: |
-          echo "${{ toJson(github.event.pull_request) }}"
-    
-      #- name: Update pull request branch
-      #  uses: actions/github-script@v6
-      #  with:
-      #    script: |
-      #      var { data } = await github.rest.repos.compareCommitsWithBasehead({
-      #        owner: context.repo.owner,
-      #        repo: context.repo.repo,
-      #        basehead: '${{ github.event.repository.default_branch }}...${{ github.head_ref }}'
-      #      });
-      #      console.log(data);
-      #      console.log(data.behind_by);
-
-      #      if (data.behind_by > 0) {
-      #        github.rest.pulls.updateBranch({
-      #          owner: context.repo.owner,
-      #          repo: context.repo.repo,
-      #          pull_number: context.issue.number,
-      #          expected_head_sha: context.payload.pull_request.head.sha
-      #        });
-      #      }
-
-      #- name: Check mergability
-      #  run: |
-      #    if git merge-base --is-ancestor main feat/test2
-      #    then
-      #      echo "Your branch is up to date."
-      #      exit 0
-      #    else
-      #      echo "You need to merge / rebase."
-      #      exit 1
-      #    fi
-
+            if (data.behind_by > 0) {
+              github.rest.pulls.updateBranch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                expected_head_sha: context.payload.pull_request.head.sha
+              });
+            }
