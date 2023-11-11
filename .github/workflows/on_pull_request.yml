@@ -34,7 +34,9 @@ jobs:
             }
 
             const query = `mutation($pullRequestId:String!) {
-                disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {}
+                disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {
+                  clientMutationId
+                }
               }`;
               const variables = {
                   pullRequestId:context.issue.number
