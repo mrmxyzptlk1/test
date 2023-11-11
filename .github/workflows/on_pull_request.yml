@@ -46,7 +46,9 @@ jobs:
 
             // Using GraphQL API because endpoint is not availale via REST API
             const query = `mutation($pullRequestId:ID!) {
-                disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {}
+                disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {
+                  clientMutationId
+                }
               }`;
               const variables = {
                   pullRequestId: context.payload.pull_request.node_id
