@@ -51,7 +51,7 @@ jobs:
               const variables = {
                   pullRequestId: context.payload.pull_request.node_id
               }
-              const result = await github.graphql(query, variables)
+              await github.graphql(query, variables)
 
   test:
     if: github.actor == 'GHApp-mrmxyzptlk1[bot]'
