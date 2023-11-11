@@ -33,13 +33,13 @@ jobs:
               });
             }
 
-            const query = `mutation($pullRequestId:String!) {
+            const query = `mutation($pullRequestId:ID!) {
                 disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {
                   clientMutationId
                 }
               }`;
               const variables = {
-                  pullRequestId:`${context.issue.number}`
+                  pullRequestId:context.payload.pull_request.id
               }
               const result = await github.graphql(query, variables)
               console.log(result)
