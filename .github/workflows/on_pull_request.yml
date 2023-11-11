@@ -33,7 +33,7 @@ jobs:
               });
             }
 
-            const query = `mutation($pullRequestId:String!) {
+            const query = `mutation($pullRequestId:ID!) {
                 disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {
                   clientMutationId
                 }
