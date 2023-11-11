@@ -2,7 +2,7 @@ name: "PR merging"
 
 on:
   pull_request:
-    types: [ synchronize ]
+    types: [ synchronize, auto_merge_disabled ]
 
 jobs:
   merge_conflict:
@@ -42,4 +42,3 @@ jobs:
                   pullRequestId:context.payload.pull_request.node_id
               }
               const result = await github.graphql(query, variables)
-              console.log(result)
