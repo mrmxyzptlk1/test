@@ -6,15 +6,26 @@ on:
 
 jobs:
   merge_conflict:
+    if: github.actor != 'GHApp-mrmxyzptlk1[bot]'
     name: Merge conflicts
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
+    #permissions:
+    #  contents: write
+    #  pull-requests: write
     steps:
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
+        with:
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+          permissions: "contents: write, pull-requests: write"
+      
       - name: Update pull request branch
         uses: actions/github-script@v6
         with:
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             var { data } = await github.rest.repos.compareCommitsWithBasehead({
               owner: context.repo.owner,
@@ -33,6 +44,7 @@ jobs:
               });
             }
 
+            // Using GraphQL API because endpoint is not availale via REST API
             const query = `mutation($pullRequestId:ID!) {
                 disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {
                   clientMutationId
@@ -43,3 +55,9 @@ jobs:
               }
               const result = await github.graphql(query, variables)
 
+  test:
+    if: github.actor == 'GHApp-mrmxyzptlk1[bot]'
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.event.action }}"
