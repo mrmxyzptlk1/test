@@ -23,8 +23,6 @@ jobs:
           permissions: "contents: write, pull_requests: write"
       
       - name: Update pull request branch
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/github-script@v6
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
@@ -46,20 +44,14 @@ jobs:
               });
             }
 
-            const token = process.env.TOKEN
-            const octokit_graphql = new Octokit({
-              auth: token
-            })
             // Using GraphQL API because endpoint is not availale via REST API
             const query = `mutation($pullRequestId:ID!) {
-                disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {
-                  clientMutationId
-                }
+                disablePullRequestAutoMerge(input: {pullRequestId:$pullRequestId}) {}
               }`;
               const variables = {
-                  pullRequestId:context.payload.pull_request.node_id
+                  pullRequestId: context.payload.pull_request.node_id
               }
-              const result = await octokit_graphql.graphql(query, variables)
+              const result = await github.graphql(query, variables)
 
   test:
     if: github.actor == 'GHApp-mrmxyzptlk1[bot]'
