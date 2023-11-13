@@ -1,4 +1,4 @@
-module.exports = async ({github, context, param3, param4}) => {
+module.exports = async ({github, context, check_value1, check_value2}) => {
   console.log("inisde test.js script:");
-  console.log(param3, param4);
+  console.log(check_value1, check_value2);
 }
