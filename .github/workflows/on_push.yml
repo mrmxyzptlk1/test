@@ -21,8 +21,8 @@ jobs:
     
       - name: Test
         env:
-          VALUE1: env_value1
-          VALUE2: env_value2
+          VALUE1: '[]'
+          VALUE2: '0'
         uses: actions/github-script@v6
         with:
           script: |
