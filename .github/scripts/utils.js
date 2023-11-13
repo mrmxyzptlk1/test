@@ -6,16 +6,17 @@ module.exports = async ({github, context, utils1, utils2}) => {
   if (context.actor === 'mrmxyzptlk1') {
       if (utils1 === '[]' || (utils1 !== '[]' && utils2 === '0')) {
         console.log("Utils: Skip");
-        const status = "skip"
+        const status = "skip";
+        console.log(status);
       } else if (utils1 !== '[]' && utils2 === '0') {
         console.log("Utils: Fail");
-        const status = "fail"
+        const status = "fail";
       } else {
         console.log("else");
       }
   } else if (context.actor !== 'mrmxyzptlk1') {
-    console.log("Utils: Success")
-    const status = "success"
+    console.log("Utils: Success");
+    const status = "success";
   }
 
   return [action, status]
