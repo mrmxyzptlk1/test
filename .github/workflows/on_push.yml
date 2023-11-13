@@ -30,7 +30,7 @@ jobs:
             const test = require('./.github/scripts/test.js')
             const { value1, value2 } = await utils({github, context})
             console.log(value1, value2);
-            await test({github, context, ${{ env.VALUE1 }}, ${{ env.VALUE2 }}})
+            await test({github, context, value1, value2})
       
       #- name: Delete environment
       #  uses: actions/github-script@v6
