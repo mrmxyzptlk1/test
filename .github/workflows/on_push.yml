@@ -32,7 +32,7 @@ jobs:
                 while (counter < 8) {
                     try {
                         console.log(counter)
-                        sleep(10000);
+                        await sleep(1000);
                         console.log(test)
                     } catch (error) {
                         counter++;
