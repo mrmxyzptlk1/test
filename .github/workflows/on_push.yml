@@ -24,8 +24,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const test_two = require('./.github/scripts/test_two.js');
-            await test_two({github, context});
+            core.setFailed("Set exit code");
+            process.exit()
+            console.log("test");
       
       #- name: Delete environment
       #  uses: actions/github-script@v6
