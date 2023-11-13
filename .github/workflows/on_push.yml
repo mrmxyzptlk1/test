@@ -33,9 +33,9 @@ jobs:
                 while (counter < 9) {
                     try {
                         console.log(counter)
-                        await sleep(1000);
                         console.log(test)
                     } catch (error) {
+                        await sleep(1000);
                         counter++;
                         if (counter == 9) {
                           console.log("done");
