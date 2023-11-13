@@ -21,18 +21,26 @@ jobs:
       #    permissions: "administration:write"
     
       - name: Test
-        env:
-          VALUE1: '[test]'
-          VALUE2: '1'
         uses: actions/github-script@v6
         with:
           script: |
-            const utils = require('./.github/scripts/utils.js')
-            const test = require('./.github/scripts/test.js')
-
-            const [utils1, utils2] = ["${{ env.VALUE1 }}", "${{ env.VALUE2 }}"];
-            const [check_value1, check_value2] = await utils({github, context, utils1, utils2});
-            await test({github, context, check_value1, check_value2});
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+            var counter = 1;
+            async function checkIfMerged() {
+                while (counter < 8) {
+                    try {
+                        console.log(counter)
+                        sleep(10000);
+                        console.log(test)
+                    } catch (error) {
+                        counter++;
+                    }
+                }
+            }
+            
+            setTimeout(checkIfMerged, 5000);
       
       #- name: Delete environment
       #  uses: actions/github-script@v6
