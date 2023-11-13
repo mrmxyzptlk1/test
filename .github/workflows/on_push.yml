@@ -27,8 +27,9 @@ jobs:
         with:
           script: |
             const script = require('./.github/scripts/utils.js')
-            const value1, value2 = await script({github, context})
+            const { value1, value2 } = await script({github, context})
             console.log(value1, value2);
+            await script({github, context, value1, value2})
       
       #- name: Delete environment
       #  uses: actions/github-script@v6
