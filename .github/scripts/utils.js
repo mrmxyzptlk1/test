@@ -17,6 +17,10 @@ module.exports = async ({github, context, utils1, utils2}) => {
       console.log("Utils: Success");
       var status = "success";
     }
+  } else if (context.eventName === 'issue_comment') {
+    console.log("Utils, issue_comment: Update success");
+    var action = "update";
+    var status = "success";
   }
 
   return [action, status]
