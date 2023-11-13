@@ -2,19 +2,20 @@ module.exports = async ({github, context, utils1, utils2}) => {
   console.log("inisde utils.js script:");
   console.log(utils1, utils2);
 
+  const action = "create"
   if (context.actor !== 'mrmxyzptlk1') {
-      if (1 > 0 && 2 < 1) {
-        // block of code to be executed if condition1 is true
-      } else if (condition2) {
-        // block of code to be executed if the condition1 is false and condition2 is true
+      if (utils1 === '[]' || (utils1 !== '[]' && utils2 === '0')) {
+        console.log("Utils: Skip");
+        const status = "Skip"
+      } else if (utils1 !== '[]' && utils2 === '0') {
+        console.log("Utils: Fail");
+        const status = "Fail"
       } else {
-        // block of code to be executed if the condition1 is false and condition2 is false
+        console.log("else");
       }
-  } else {
-    console.log("wrong actor")
+  } else if (context.actor === 'mrmxyzptlk1') {
+    console.log("Utils: Success")
   }
-  
-  const value1 = "test_value1"
-  const value2 = "test_value2"
-  return [value1, value2]
+
+  return [action, status]
 }
