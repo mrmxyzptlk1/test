@@ -20,12 +20,15 @@ jobs:
       #    permissions: "administration:write"
     
       - name: Test
+        env:
+          VALUE1: value1
+          VALUE2: value2
         uses: actions/github-script@v6
         with:
           script: |
-            const script = require('./.github/scripts/test.js')
-            const value = await script({github, context})
-            console.log(value);
+            const script = require('./.github/scripts/utils.js')
+            const value1, value2 = await script({github, context})
+            console.log(value1, value2);
       
       #- name: Delete environment
       #  uses: actions/github-script@v6
