@@ -1,4 +1,4 @@
 module.exports = async ({github, context}) => {
-  const updated = "false
+  const updated = "false"
   return updated
 }
