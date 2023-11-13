@@ -4,26 +4,6 @@ on:
   push:
 
 jobs:
-  changes:
-    name: Detect changes
-    runs-on: ubuntu-latest
-    outputs:
-      changes: ${{ steps.filter.outputs.changes }}
-      environment: ${{ steps.env_name.outputs.environment }}
-    steps:
-      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
-        id: filter
-        with:
-          filters: |
-            folder_one:
-              - "folder1/**"
-            folder_two:
-              - "folder2/**"
-
-      #- if: steps.filter.outputs.changes != '[]'
-      #  id: env_name
-      #  run: echo "environment='PR #${{ github.event.number }}'" >> "$GITHUB_OUTPUT"
-  
   test:
     name: Test
     runs-on: ubuntu-latest
