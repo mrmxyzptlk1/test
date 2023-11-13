@@ -27,15 +27,19 @@ jobs:
             function sleep(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
+            
             var counter = 1;
             async function checkIfMerged() {
-                while (counter < 8) {
+                while (counter < 9) {
                     try {
                         console.log(counter)
                         await sleep(1000);
                         console.log(test)
                     } catch (error) {
                         counter++;
+                        if (counter == 9) {
+                          console.log("done");
+                        }
                     }
                 }
             }
