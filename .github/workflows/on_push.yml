@@ -23,7 +23,7 @@ jobs:
       - name: Test
         env:
           VALUE1: '[test]'
-          VALUE2: ${{ github.event_name == 'pull_request' }} && '1' ? '0'
+          VALUE2: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         uses: actions/github-script@v6
         with:
           script: |
