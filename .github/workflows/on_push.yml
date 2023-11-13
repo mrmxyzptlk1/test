@@ -29,7 +29,7 @@ jobs:
             const utils = require('./.github/scripts/utils.js')
             const test = require('./.github/scripts/test.js')
 
-            const [utils1, utils2] = [${{ env.VALUE1 }}, ${{ env.VALUE2 }}];
+            const [utils1, utils2] = ["${{ env.VALUE1 }}", "${{ env.VALUE2 }}"];
             console.log(utils1, utils2);
             const { check_value1, check_value2 } = await utils({github, context, utils1, utils2});
             console.log(check_value1, check_value2);
