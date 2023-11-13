@@ -25,33 +25,49 @@ jobs:
       #  run: echo "environment='PR #${{ github.event.number }}'" >> "$GITHUB_OUTPUT"
   
   test:
-    name: Test env deletion
+    name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Generate app token
-        id: generate_token
-        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
-        with:
-          app_id: ${{ secrets.APPLICATION_ID }}
-          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
-          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
-          permissions: "administration:write"
+      - uses: actions/checkout@v3
+      
+      #- name: Generate app token
+      #  id: generate_token
+      #  uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
+      #  with:
+      #    app_id: ${{ secrets.APPLICATION_ID }}
+      #    app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+      #    app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+      #    permissions: "administration:write"
     
-      - name: Delete environment
+      - name: Test
+        env:
+          VALUE1: '[test]'
+          VALUE2: '1'
         uses: actions/github-script@v6
         with:
-          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
-            try {
-              response = await github.rest.repos.deleteAnEnvironment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                environment_name: 'test'
-              });
-            } catch (error) {
-              if (error.status == 404) {
-                console.log("Environment does not exist.");
-              } else {
-                throw error
-              }
-            }
+            const utils = require('./.github/scripts/utils.js')
+            const test = require('./.github/scripts/test.js')
+
+            const [utils1, utils2] = ["${{ env.VALUE1 }}", "${{ env.VALUE2 }}"];
+            const [check_value1, check_value2] = await utils({github, context, utils1, utils2});
+            await test({github, context, check_value1, check_value2});
+      
+      #- name: Delete environment
+      #  uses: actions/github-script@v6
+      #  with:
+      #    github-token: ${{ steps.generate_token.outputs.token }}
+      #    script: |
+      #      try {
+      #        response = await github.rest.repos.deleteAnEnvironment({
+      #          owner: context.repo.owner,
+      #          repo: context.repo.repo,
+      #          environment_name: 'test'
+      #        });
+      #      } catch (error) {
+      #        if (error.status == 404) {
+      #          console.log("Environment does not exist.");
+      #        } else {
+      #          throw error
+      #        }
+      #      }
