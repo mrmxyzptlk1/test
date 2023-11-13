@@ -27,7 +27,7 @@ jobs:
         with:
           script: |
             const utils = require('./.github/scripts/utils.js')
-            const test = require('./.github/scripts/utils.js')
+            const test = require('./.github/scripts/test.js')
             const { value1, value2 } = await utils({github, context})
             console.log(value1, value2);
             await test({github, context, value1, value2})
