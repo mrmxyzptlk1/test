@@ -7,7 +7,7 @@ module.exports = async ({github, context, utils1, utils2}) => {
       if (utils1 === '[]' || (utils1 !== '[]' && utils2 === '0')) {
         console.log("Utils: Skip");
         var status = "skip";
-      } else if (utils1 !== '[]' && utils2 === '0') {
+      } else if (utils1 !== '[]' && utils2 !== '0') {
         console.log("Utils: Fail");
         var status = "fail";
       } else {
