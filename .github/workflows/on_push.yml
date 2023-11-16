@@ -20,7 +20,8 @@ jobs:
           echo "${{ github.event.number }}-${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) }}"
 
       - run: sleep 1m
-      
+
+
       #- name: Generate app token
       #  id: generate_token
       #  uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
