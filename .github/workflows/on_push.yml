@@ -2,14 +2,24 @@ name: "Test filtering"
 
 on:
   pull_request:
+    types: [ synchronize, auto_merge_enabled, auto_merge_disabled ]
   issue_comment:
+
+concurrency:
+  #group: ${{ github.event.number }}-${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) }}
+  group: ${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) && github.event.number || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - run: |
+          echo "${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) && github.event.number || github.run_id }}"
+          echo "${{ github.event.number }}-${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) }}"
+
+      - run: sleep 1m
       
       #- name: Generate app token
       #  id: generate_token
@@ -20,12 +30,12 @@ jobs:
       #    app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
       #    permissions: "administration:write"
     
-      - name: Test
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const test_three = require('./.github/scripts/test_three.js');
-            await test_three({github, context, core});
+      #- name: Test
+      #  uses: actions/github-script@v6
+      #  with:
+      #    script: |
+      #      const test_three = require('./.github/scripts/test_three.js');
+      #      await test_three({github, context, core});
       
       #- name: Delete environment
       #  uses: actions/github-script@v6
