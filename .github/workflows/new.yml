@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [ auto_merge_enabled ]
   check_run:
-    types: [ requested_action]
+    types: [ rerequested, requested_action]
 
 jobs:
   check_contexts:
