@@ -18,7 +18,10 @@ jobs:
             await test({github, context});
             await test2({github, context});
 
-            core.info('Output to the actions build log');
+            const test1 = "logged_value1";
+            const test2 = "logged_value2";
+            core.info('Output to the actions build log', test1);
+            core.info('Output to the actions build log' + test1 + 'more text: ' + test2);
             core.notice('Something happened that you might want to know about.');
             core.warning('Something went wrong, but it\'s not bad enough to fail the build.');
             core.error('This is a bad error, action may still succeed though.');
