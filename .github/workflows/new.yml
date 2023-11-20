@@ -2,12 +2,16 @@ name: "Testing"
 
 on:
   pull_request:
+    types: [ auto_merge_enabled ]
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: check
+        run: echo "${{ context.payload.pull_request.auto_merge }}"
+    
       - uses: actions/checkout@v3
     
       - name: Test
