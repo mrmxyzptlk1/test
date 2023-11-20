@@ -2,7 +2,7 @@ name: "Testing"
 
 on:
   pull_request:
-    types: [ auto_merge_enabled ]
+    types: [ auto_merge_enabled, synchronize ]
 
 jobs:
   check_contexts:
@@ -20,9 +20,6 @@ jobs:
             } else {
               console.log("else");
             }
-    
-      - name: check
-        run: echo "${{ context.payload.pull_request.auto_merge }}"
     
       - uses: actions/checkout@v3
     
