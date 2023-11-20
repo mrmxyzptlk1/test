@@ -15,6 +15,8 @@ jobs:
         with:
           script: |
             const { test, test2 } = require('./.github/scripts/index.js');
+            await test();
+            await test2();
 
 
 # const { test, test2 } = require('.github/scripts/index.js');
