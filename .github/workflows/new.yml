@@ -5,8 +5,8 @@ on:
     types: [ auto_merge_enabled ]
 
 jobs:
-  test:
-    name: Test
+  check_contexts:
+    name: Check context
     runs-on: ubuntu-latest
     steps:
       - name: check
