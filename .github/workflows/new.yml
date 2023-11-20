@@ -18,7 +18,7 @@ jobs:
               repo: context.repo.repo,
               name: 'Check1',
               head_sha: "${{ github.head_ref }}",
-              conclusion: neutral
+              conclusion: 'neutral'
             })
 
             await github.rest.checks.create({
@@ -26,7 +26,7 @@ jobs:
               repo: context.repo.repo,
               name: 'Check2',
               head_sha: "${{ github.head_ref }}",
-              conclusion: action_required
+              conclusion: 'action_required'
             })
     
       - uses: actions/checkout@v3
