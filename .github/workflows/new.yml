@@ -29,7 +29,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Check1',
-              head_sha: "${{ github.head_ref }}",
+              head_sha: "${{ github.event.pull_request.head.sha }}",
               conclusion: 'neutral'
             })
 
@@ -37,7 +37,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Check2',
-              head_sha: "${{ github.head_ref }}",
+              head_sha: "${{ github.event.pull_request.head.sha }}",
               conclusion: 'action_required',
               actions: [{
                 label: 'label',
