@@ -3,6 +3,8 @@ name: "Testing"
 on:
   pull_request:
     types: [ auto_merge_enabled ]
+  check_run:
+    types: [ requested_action]
 
 jobs:
   check_contexts:
