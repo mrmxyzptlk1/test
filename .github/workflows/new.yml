@@ -2,7 +2,7 @@ name: "Testing"
 
 on:
   pull_request:
-    types: [ auto_merge_enabled, synchronize ]
+    types: [ auto_merge_enabled ]
 
 jobs:
   check_contexts:
@@ -13,13 +13,21 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(JSON.stringify(context.payload.pull_request.auto_merge));
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: Test1,
+              head_sha: ref,
+              conclusion: neutral
+            })
 
-            if (context.payload.pull_request.auto_merge == null) {
-              console.log("here");
-            } else {
-              console.log("else");
-            }
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: Test2,
+              head_sha: ref,
+              conclusion: action_required
+            })
     
       - uses: actions/checkout@v3
     
