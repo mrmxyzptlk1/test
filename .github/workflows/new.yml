@@ -14,8 +14,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const test = require('./.github/scripts/test.js');
-            const test2 = require('./.github/scripts/test2.js');
+            const { test, test2 } = require('./.github/scripts/index.js');
 
 
 # const { test, test2 } = require('.github/scripts/index.js');
