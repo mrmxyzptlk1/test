@@ -17,7 +17,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: Test1,
-              head_sha: ref,
+              head_sha: "${{ github.head_ref }}",
               conclusion: neutral
             })
 
@@ -25,7 +25,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: Test2,
-              head_sha: ref,
+              head_sha: "${{ github.head_ref }}",
               conclusion: action_required
             })
     
