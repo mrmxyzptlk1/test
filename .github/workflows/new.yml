@@ -16,7 +16,7 @@ jobs:
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: Test1,
+              name: 'Check1',
               head_sha: "${{ github.head_ref }}",
               conclusion: neutral
             })
@@ -24,7 +24,7 @@ jobs:
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: Test2,
+              name: 'Check2',
               head_sha: "${{ github.head_ref }}",
               conclusion: action_required
             })
