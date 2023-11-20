@@ -1,3 +1,3 @@
 module.exports = async ({github, context}) => {
-  console.log("inisde test.js script:");
+  console.log("inisde test2.js script:");
 }
