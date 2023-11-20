@@ -10,6 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: check
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log(JSON.stringify(context.payload.pull_request.auto_merge));
+
+            if (context.payload.pull_request.auto_merge != null) {
+              console.log("here");
+            } else {
+              console.log("else");
+            }
+    
+      - name: check
         run: echo "${{ context.payload.pull_request.auto_merge }}"
     
       - uses: actions/checkout@v3
