@@ -15,8 +15,9 @@ jobs:
         with:
           script: |
             const { test, test2 } = require('.github/scripts');
-            await test({github, context});
-            await test2({github, context})
 
+
+#await test({github, context});
+#            await test2({github, context})
 #const utils = require('./.github/scripts/utils.js')
 #const test = require('./.github/scripts/test.js')
