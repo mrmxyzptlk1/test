@@ -26,7 +26,11 @@ jobs:
               repo: context.repo.repo,
               name: 'Check2',
               head_sha: "${{ github.head_ref }}",
-              conclusion: 'action_required'
+              conclusion: 'action_required',
+              actions: {
+                label: 'label',
+                description: 'description',
+                identifier: 'identifier'
             })
     
       - uses: actions/checkout@v3
