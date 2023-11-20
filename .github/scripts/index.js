@@ -1,7 +1,7 @@
+//const test = require('./.github/scripts/test.js');
+//const test2 = require('./.github/scripts/test2.js');
+
 module.exports = {
-  const test = require('./.github/scripts/test.js');
-  const test2 = require('./.github/scripts/test2.js');
-  
-  //test: test,
-  //test2: test2
+  test: require('./.github/scripts/test.js'),
+  test2: require('./.github/scripts/test2.js')
 }
