@@ -18,6 +18,7 @@ jobs:
             await test({github, context});
             await test2({github, context});
 
+            core.info('Output to the actions build log');
             core.notice('Something happened that you might want to know about.');
             core.warning('Something went wrong, but it\'s not bad enough to fail the build.');
             core.error('This is a bad error, action may still succeed though.');
