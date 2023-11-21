@@ -11,6 +11,19 @@ jobs:
     steps:
       - name: Check
         run: echo "${{ toJSON(github.event.changes) }}"
+
+      - name: Check comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const comment = context.payload.comment.body;
+            console.log(comment);
+            console.log(comment.includes('- [x] Checkbox'));
+            if (comment.includes('- [x] Checkbox')) {
+              console.log("truee");
+            } else {
+              console.log("falsee");
+            }
     
       #- name: Find Comment
       #  uses: peter-evans/find-comment@v2
