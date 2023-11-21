@@ -2,12 +2,50 @@ name: "Testing"
 
 on:
   pull_request:
+    types: [ auto_merge_enabled ]
+  check_run:
+    types: [ rerequested, requested_action]
 
 jobs:
-  test:
-    name: Test
+  check_contexts:
+    name: Check context
     runs-on: ubuntu-latest
     steps:
+      - name: Generate app token
+        id: generate_token
+        uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
+        with:
+          app_id: ${{ secrets.APPLICATION_ID }}
+          app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
+          permissions: "checks: write"
+    
+      - name: check
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
+          script: |
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Check1',
+              head_sha: "${{ github.event.pull_request.head.sha }}",
+              conclusion: 'neutral'
+            })
+
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Check2',
+              head_sha: "${{ github.event.pull_request.head.sha }}",
+              conclusion: 'action_required',
+              actions: [{
+                label: 'label',
+                description: 'description',
+                identifier: 'identifier'
+              }]
+            })
+    
       - uses: actions/checkout@v3
     
       - name: Test
@@ -18,6 +56,10 @@ jobs:
             await test({github, context});
             await test2({github, context});
 
+            const log_test1 = "logged_value1";
+            const log_test2 = "logged_value2";
+            core.info('Output to the actions build log', log_test1);
+            core.info('Output to the actions build log' + log_test1 + 'more text: ' + log_test2);
             core.notice('Something happened that you might want to know about.');
             core.warning('Something went wrong, but it\'s not bad enough to fail the build.');
             core.error('This is a bad error, action may still succeed though.');
