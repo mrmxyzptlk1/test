@@ -1,0 +1,13 @@
+name: "Testing"
+
+on:
+  check_run:
+    types: [ created, rerequested, completed, requested_action ]
+
+jobs:
+  check_run:
+    name: Check run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check
+        run: echo "test"
