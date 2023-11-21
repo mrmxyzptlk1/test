@@ -9,36 +9,8 @@ jobs:
     if: github.event_name == 'issue_comment'
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR emrge status
-        uses: actions/github-script@v6
-        with:
-          script: |
-            try {
-              response = await github.rest.pulls.checkIfMerged({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: '3'
-              });
-              if (response.status = 204) {
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: 'PR was successfully merged!'
-                });
-              }
-            } catch (error) {
-              if (error.status = 404) {
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: 'PR was not merged!'
-                });
-              } else {
-                throw error
-              }
-            }
+      - name: Check
+        run: echo "${{ toJSON(github.event.changes) }}"
     
       #- name: Find Comment
       #  uses: peter-evans/find-comment@v2
