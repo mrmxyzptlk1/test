@@ -33,12 +33,17 @@ jobs:
               conclusion: 'neutral'
             })
 
+            const conclusion = 'skipped';
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Check2',
               head_sha: "${{ github.event.pull_request.head.sha }}",
-              conclusion: 'skipped'
+              conclusion: conclusion,
+              output: {
+                title: 'For this and that',
+                summary: 'This check concluded as ' + conclusion
+              }
             })
     
       - uses: actions/checkout@v3
