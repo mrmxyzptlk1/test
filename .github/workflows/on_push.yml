@@ -1,9 +1,9 @@
 name: "Test filtering"
 
 on:
-  push:
-  #pull_request:
-  #issue_comment:
+  #push:
+  issue_comment:
+    types: [edited]
 
 env:
   COMMENT_START: '####  ⚠ PR blocked notification'
@@ -14,7 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: check
-        run: echo '${{ env.COMMENT_START }}'
+        run: |
+          echo '${{ env.COMMENT_START }}'
+          echo '${{ startsWith(github.event.comment.body, env.COMMENT_START) }}'
+
+      - if: startsWith(github.event.comment.body, env.COMMENT_START)
+        name: Step 2
+        run: echo "test"
     
       #- uses: actions/checkout@v3
       
