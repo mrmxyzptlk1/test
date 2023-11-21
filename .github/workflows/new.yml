@@ -25,24 +25,42 @@ jobs:
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
           script: |
+            const conclusion1 = 'failure';
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Check1',
               head_sha: "${{ github.event.pull_request.head.sha }}",
-              conclusion: 'neutral'
+              conclusion: conclusion1,
+              output: {
+                title: 'For this and that',
+                summary: 'This check concluded as ' + conclusion1
+              }
             })
 
-            const conclusion = 'skipped';
+            const conclusion2 = 'success';
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Check1',
+              head_sha: "${{ github.event.pull_request.head.sha }}",
+              conclusion: conclusion2,
+              output: {
+                title: 'For this and that',
+                summary: 'This check concluded as ' + conclusion2
+              }
+            })
+
+            const conclusion3 = 'skipped';
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Check2',
               head_sha: "${{ github.event.pull_request.head.sha }}",
-              conclusion: conclusion,
+              conclusion: conclusion3,
               output: {
                 title: 'For this and that',
-                summary: 'This check concluded as ' + conclusion
+                summary: 'This check concluded as ' + conclusion3
               }
             })
     
