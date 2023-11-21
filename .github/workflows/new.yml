@@ -42,7 +42,7 @@ jobs:
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: 'Check1',
+              name: 'Check2',
               head_sha: "${{ github.event.pull_request.head.sha }}",
               conclusion: conclusion2,
               output: {
@@ -55,7 +55,7 @@ jobs:
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: 'Check2',
+              name: 'Check3',
               head_sha: "${{ github.event.pull_request.head.sha }}",
               conclusion: conclusion3,
               output: {
