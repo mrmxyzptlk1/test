@@ -23,7 +23,7 @@ jobs:
       - name: check
         uses: actions/github-script@v6
         with:
-          github-token: ${{ steps.generate_token.outputs.token }}
+          #github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             await github.rest.checks.create({
               owner: context.repo.owner,
