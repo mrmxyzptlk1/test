@@ -21,7 +21,7 @@ jobs:
             console.log(comment.includes('- [x] Checkbox'));
             if (comment.includes('- [x] Checkbox')) {
               console.log("truee");
-            } else {
+            } else if (comment.includes('- [ ] Checkbox')) {
               console.log("falsee");
             }
     
