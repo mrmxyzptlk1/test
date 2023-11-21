@@ -38,12 +38,10 @@ jobs:
               repo: context.repo.repo,
               name: 'Check2',
               head_sha: "${{ github.event.pull_request.head.sha }}",
-              conclusion: 'success',
-              actions: [{
-                label: 'label',
-                description: 'description',
-                identifier: 'identifier'
-              }]
+              conclusion: 'skipped',
+              output: {
+                title: 'For this and that'
+              }
             })
     
       - uses: actions/checkout@v3
