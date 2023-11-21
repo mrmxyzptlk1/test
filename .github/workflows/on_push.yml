@@ -5,8 +5,8 @@ on:
   issue_comment:
     types: [edited]
 
-env:
-  COMMENT_START: '####  ⚠ PR blocked notification'
+#env:
+  #COMMENT_START: '####  ⚠ PR blocked notification'
 
 jobs:
   test:
@@ -16,9 +16,9 @@ jobs:
       - name: check
         run: |
           echo '${{ env.COMMENT_START }}'
-          echo '${{ startsWith(github.event.comment.body, env.COMMENT_START) }}'
+          echo '${{ startsWith(github.event.comment.body, vars.COMMENT_START) }}'
 
-      - if: startsWith(github.event.comment.body, env.COMMENT_START)
+      - if: startsWith(github.event.comment.body, vars.COMMENT_START)
         name: Step 2
         run: echo "test"
     
