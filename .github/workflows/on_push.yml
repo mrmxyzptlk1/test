@@ -5,14 +5,16 @@ on:
   issue_comment:
     types: [edited]
 
-#env:
-  #COMMENT_START: '####  ⚠ PR blocked notification'
+env:
+  COMMENT: '- [x] ${{ vars.COMMENT_TEST }}'
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - run: echo '${{ env.COMMENT }}'
+    
       - name: Check
         run: echo "${{ toJSON(github.event.comment.body) }}"
       
