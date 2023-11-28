@@ -1,3 +1,5 @@
+name: "Workflow run"
+
 on:
   workflow_run:
     workflows: [Testing]
