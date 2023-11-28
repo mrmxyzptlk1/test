@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check workflow_run object
-        run: echo "${{ toJSON(github.event.workflow_run) }}
+        run: echo "${{ toJSON(github.event.workflow_run) }}"
 
       - name: Check workflow object
-        run: echo "${{ toJSON(github.event.workflow) }}
+        run: echo "${{ toJSON(github.event.workflow) }}"
