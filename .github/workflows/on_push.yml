@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [ synchronize, auto_merge_enabled, auto_merge_disabled ]
   issue_comment:
+    types: [edited]
+
+env:
+  COMMENT: '- [x] ${{ vars.COMMENT_TEST }}'
 
 concurrency:
   #group: ${{ github.event.number }}-${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) }}
@@ -15,44 +19,4 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo "${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) && github.event.number || github.run_id }}"
-          echo "${{ github.event.number }}-${{ contains(fromJSON('["auto_merge_enabled", "auto_merge_disabled"]'), github.event.action) }}"
-
-      - run: sleep 1m
-
-
-      #- name: Generate app token
-      #  id: generate_token
-      #  uses: mrmxyzptlk1/test/.github/actions/generate_app_token@main
-      #  with:
-      #    app_id: ${{ secrets.APPLICATION_ID }}
-      #    app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
-      #    app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
-      #    permissions: "administration:write"
-    
-      #- name: Test
-      #  uses: actions/github-script@v6
-      #  with:
-      #    script: |
-      #      const test_three = require('./.github/scripts/test_three.js');
-      #      await test_three({github, context, core});
-      
-      #- name: Delete environment
-      #  uses: actions/github-script@v6
-      #  with:
-      #    github-token: ${{ steps.generate_token.outputs.token }}
-      #    script: |
-      #      try {
-      #        response = await github.rest.repos.deleteAnEnvironment({
-      #          owner: context.repo.owner,
-      #          repo: context.repo.repo,
-      #          environment_name: 'test'
-      #        });
-      #      } catch (error) {
-      #        if (error.status == 404) {
-      #          console.log("Environment does not exist.");
-      #        } else {
-      #          throw error
-      #        }
-      #      }
+      - run: echo "test"
