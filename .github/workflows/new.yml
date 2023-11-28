@@ -29,7 +29,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               event_type: '${{ github.event.action }}',
-              client_payload: ${{ github.event }}
+              client_payload: '${{ github.event }}'
             })
     
       - name: check
