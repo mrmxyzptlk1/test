@@ -10,7 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check event object
-        run: echo "${{ toJSON(github.event.client_payload) }}"
+        run: |
+          echo "${{ github.event.client_payload.number ) }}"
+          echo "${{ github.event.client_payload.pull_request.head.ref ) }}"
+          echo "${{ github.event.client_payload.pull_request.head.sha ) }}"
 
+      - name: Check pr object
+        run: echo '${{ toJSON(github.event.client_payload.pull_request) }}'
+      
       - name: Check whole event object
-        run: echo "${{ toJSON(github.event) }}"
+        run: echo '${{ toJSON(github.event) }}'
