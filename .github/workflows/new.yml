@@ -1,7 +1,7 @@
 name: "Testing"
 
 on:
-  pull_request_target:
+  pull_request:
     types: [ auto_merge_enabled, synchronize ]
   #check_run:
   #  types: [ rerequested, requested_action]
@@ -19,6 +19,18 @@ jobs:
           app_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
           app_installation_id: ${{ secrets.APPLICATION_INSTALLATION_ID }}
           permissions: "checks: write, pull_requests: write, administration: write"
+
+      - name: Call workflow
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
+          script: |
+            const conclusion1 = 'failure';
+            await github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: '${{ github.event.action }}',
+              client_payload: ${{ github.event }}
     
       - name: check
         uses: actions/github-script@v6

@@ -1,0 +1,16 @@
+name: "Repository dispatch"
+
+on:
+  repository_dispatch:
+    types: [synchronize]
+
+jobs:
+  workflow_run:
+    name: Second workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check event object
+        run: echo "${{ toJSON(github.event.client_payload) }}"
+
+      - name: Check whole event object
+        run: echo "${{ toJSON(github.event) }}"
