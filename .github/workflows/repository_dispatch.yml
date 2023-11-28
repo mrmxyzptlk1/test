@@ -9,8 +9,8 @@ jobs:
     name: Second workflow
     runs-on: ubuntu-latest
     steps:
-      - name: Check workflow_run object
-        run: echo "${{ toJSON(github.event.workflow_run) }}"
+      - name: Check event object
+        run: echo "${{ toJSON(github.event.client_payload) }}"
 
-      - name: Check workflow object
-        run: echo "${{ toJSON(github.event.workflow) }}"
+      - name: Check whole event object
+        run: echo "${{ toJSON(github.event) }}"
