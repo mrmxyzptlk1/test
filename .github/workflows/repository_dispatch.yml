@@ -9,6 +9,14 @@ jobs:
     name: Second workflow
     runs-on: ubuntu-latest
     steps:
+      - name: Check context
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log(context.payload.client_payload.pull_request.head.ref);
+            console.log(context.payload.client_payload.pull_request.head.ref);
+            console.log(context.payload.client_payload.pull_request.head.ref);
+    
       - name: Check event object
         run: |
           echo "${{ github.event.client_payload.number ) }}"
