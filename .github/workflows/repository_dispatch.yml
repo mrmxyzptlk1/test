@@ -1,9 +1,8 @@
-name: "Workflow run"
+name: "Repository dispatch"
 
 on:
-  workflow_run:
-    workflows: [Testing]
-    types: in_progress
+  repository_dispatch:
+    types: [synchronize]
 
 jobs:
   workflow_run:
