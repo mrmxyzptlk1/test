@@ -13,9 +13,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            console.log(context.payload.client_payload.pull_request.number);
             console.log(context.payload.client_payload.pull_request.head.ref);
-            console.log(context.payload.client_payload.pull_request.head.ref);
-            console.log(context.payload.client_payload.pull_request.head.ref);
+            console.log(context.payload.client_payload.pull_request.head.sha);
     
       - name: Check event object
         run: |
@@ -24,7 +24,7 @@ jobs:
           echo "${{ github.event.client_payload.pull_request.head.sha }}"
 
       - name: Check pr object
-        run: echo '${{ toJSON(github.event.client_payload.pull_request) }}'
+        run: echo ${{ toJSON(github.event.client_payload.pull_request) }}
       
       - name: Check whole event object
-        run: echo '${{ toJSON(github.event) }}'
+        run: echo ${{ toJSON(github.event) }}
