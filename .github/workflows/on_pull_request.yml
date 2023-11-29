@@ -2,7 +2,7 @@ name: "Pull request"
 
 on:
   pull_request:
-    types: [ opened, reopened, synchronize, edited, labeled ]
+    types: [ opened, reopened, edited ]
 
 jobs:
   job1:
@@ -11,20 +11,3 @@ jobs:
     steps:
       - name: Step 1
         run: echo "step 1"
-
-  job2:
-    if: github.event.action != 'edited'
-    name: Job2
-    runs-on: ubuntu-latest
-    steps:
-      - name: Step 1
-        run: echo "step 1"
-
-  job3:
-    needs: job2
-    name: Job3
-    runs-on: ubuntu-latest
-    steps:
-      - name: Step 1
-        run: echo "step 1"
-
