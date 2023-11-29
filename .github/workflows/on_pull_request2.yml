@@ -2,7 +2,7 @@ name: "Pull request 2"
 
 on:
   pull_request:
-    types: [ opened, reopened, synchronized ]
+    types: [ opened, reopened, synchronize ]
 
 jobs:
   job2:
