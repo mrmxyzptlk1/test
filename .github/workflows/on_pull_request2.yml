@@ -2,7 +2,7 @@ name: "Pull request 2"
 
 on:
   pull_request:
-    types: [ opened, reopened, synchronize ]
+    types: [ opened, reopened, synchronize, edited ]
 
 jobs:
   job2:
@@ -20,3 +20,9 @@ jobs:
       - name: Step 1
         run: exit 1
 
+  job1:
+    name: Job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: echo "step 1"
