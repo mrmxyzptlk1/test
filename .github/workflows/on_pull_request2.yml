@@ -1,0 +1,21 @@
+name: "Pull request 2"
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+
+jobs:
+  job2:
+    name: Job2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: echo "step 1"
+
+  job3:
+    needs: job2
+    name: Job3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: echo "step 1"
