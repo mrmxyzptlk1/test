@@ -6,6 +6,7 @@ on:
 
 jobs:
   job2:
+    if: github.event.action != 'edited'
     name: Job2
     runs-on: ubuntu-latest
     steps:
@@ -13,6 +14,7 @@ jobs:
         run: echo "step 1"
 
   job3:
+    if: github.event.action != 'edited'
     needs: job2
     name: Job3
     runs-on: ubuntu-latest
