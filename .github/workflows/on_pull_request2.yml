@@ -18,4 +18,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Step 1
-        run: echo "step 1"
+        run: exit 1
