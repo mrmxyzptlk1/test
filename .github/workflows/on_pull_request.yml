@@ -9,5 +9,8 @@ jobs:
     name: Job1
     runs-on: ubuntu-latest
     steps:
-      - name: Step 1
-        run: echo "${{ toJSON(github.event) }}"
+      - name: Changes
+        run: echo "${{ toJSON(github.event.changes) }}"
+
+      - name: Body
+        run: echo "${{ toJSON(github.event.pull_request.body) }}"
