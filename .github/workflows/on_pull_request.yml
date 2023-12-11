@@ -9,8 +9,13 @@ jobs:
     name: Job1
     runs-on: ubuntu-latest
     steps:
-      - name: Changes
-        run: echo "${{ toJSON(github.event.changes) }}"
-
+      - name: Check comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const comment = context.payload.body;
+            console.log(comment);
+    
       - name: Body
         run: echo "${{ toJSON(github.event.pull_request.body) }}"
+
