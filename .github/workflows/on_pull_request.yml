@@ -13,8 +13,11 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const comment = context.payload.body;
+            const comment = context.payload.pull_request.body;
             console.log(comment);
+            console.log("next");
+            const changes = context.payload.changes;
+            console.log(changes);
     
       - name: Body
         run: echo "${{ toJSON(github.event.pull_request.body) }}"
