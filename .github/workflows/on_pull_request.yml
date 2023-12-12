@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Skip
-        if: contains(github.event.pull_request.body, "- [x] deploy)
+        if: contains(github.event.pull_request.body, "- [x] deploy")
         run: echo "test"
     
       - name: Check comment
