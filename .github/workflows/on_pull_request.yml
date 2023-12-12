@@ -16,7 +16,7 @@ jobs:
             const comment = context.payload.pull_request.body;
             console.log(comment);
             console.log("next");
-            res = str.match(/^(- [x])$/mg);
+            res = comment.match(/^(- [x])$/mg);
             console.log(res);
             const changes = context.payload.changes;
             console.log(changes);
