@@ -53,7 +53,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const comment = context.payload.pull_request.body;
+            const comment = `context.payload.pull_request.body`;
             console.log(comment);
             console.log("next");
             res = comment.match(/^(- [x])$/mg);
