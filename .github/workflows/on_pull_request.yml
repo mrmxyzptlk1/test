@@ -13,6 +13,42 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const pr_body = `<details><summary>Test</summary>
+
+            <details><summary>Apps</summary>
+            
+            - [ ] app1
+            - [ ] app2
+            
+            </details>
+            
+            <details><summary>Environments</summary>
+            
+            - [ ] env1
+            - [ ] env2
+            
+            </details>
+            
+            <details><summary>Command</summary>
+            
+            - [ ] command1
+            - [ ] command2
+            
+            </details>
+            
+            </details>`
+            
+            github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: pr_body
+            });
+    
+      - name: Check comment
+        uses: actions/github-script@v6
+        with:
+          script: |
             const comment = context.payload.pull_request.body;
             console.log(comment);
             console.log("next");
