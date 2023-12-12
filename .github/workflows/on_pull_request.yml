@@ -9,6 +9,10 @@ jobs:
     name: Job1
     runs-on: ubuntu-latest
     steps:
+      - name: Skip
+        if: contains(github.event.pull_request.body, "- [x] deploy)
+        run: echo "test"
+    
       - name: Check comment
         uses: actions/github-script@v6
         with:
