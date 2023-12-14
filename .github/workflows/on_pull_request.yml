@@ -9,6 +9,9 @@ jobs:
     name: Job1
     runs-on: ubuntu-latest
     steps:
+      - name: Echo
+        run: echo "${{ github.event.changes }}"
+    
       - name: Skip
         if: contains(github.event.pull_request.body, format('- [x] {0}', 'deploy'))
         run: echo "test"
