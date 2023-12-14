@@ -14,8 +14,7 @@ jobs:
         run: echo "${{ toJSON(github.event.changes.body) }}"
     
       - name: If PR body change
-        #env:
-        #  NULL: '${{ null }}'
+        if: toJSON(github.event.changes.body || null) != "null"
         run: echo "${{ toJSON(github.event.changes.body || null) }}"
 
       - name: If PR title change
