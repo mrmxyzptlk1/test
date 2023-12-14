@@ -10,7 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo
-        run: echo "${{ toJSON(github.event.changes) }}"
+        run: |
+          echo "${{ toJSON(github.event.changes) }}"
+          echo "${{ toJSON(github.event.changes.base) }}"
+          echo "${{ toJSON(github.event.changes.body) }}"
+          echo "${{ toJSON(github.event.changes.title) }}"
     
       - name: Skip
         if: contains(github.event.pull_request.body, format('- [x] {0}', 'deploy'))
