@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: If PR title change
-        if: toJSON(github.event.changes.title) != null
+        if: ${{ toJSON(github.event.changes.title) }} != null
         run: echo "test"
 
       - name: If PR body change
-        if: toJSON(github.event.changes.body) != null
+        if: ${{ toJSON(github.event.changes.body) }} != null
         run: echo "${{ toJSON(github.event.changes.body) }}"
 
       - name: Echo
