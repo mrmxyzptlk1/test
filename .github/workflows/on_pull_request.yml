@@ -11,11 +11,11 @@ jobs:
     steps:
       - name: If PR body change
         if: toJSON(github.event.changes.body || null) != 'null'
-        run: echo "${{ toJSON(github.event.changes.body || null) }}"
+        run: echo "test"
 
       - name: If PR title change
         if: toJSON(github.event.changes.title || null) != 'null'
-        run: echo "${{ toJSON(github.event.changes.body) }}"
+        run: echo "test"
 
       - name: Echo
         run: |
