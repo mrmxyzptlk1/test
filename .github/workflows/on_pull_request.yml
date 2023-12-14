@@ -14,7 +14,7 @@ jobs:
         run: echo "test"
 
       - name: If PR title change
-        if: github.event.changes.title != {}
+        if: github.event.changes.title != '{}'
         run: echo "test"
 
       - name: If PR body change
