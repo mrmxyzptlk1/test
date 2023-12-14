@@ -16,13 +16,6 @@ jobs:
       - name: If PR title change
         if: toJSON(github.event.changes.title || null) != 'null'
         run: echo "test"
-
-      - name: Echo
-        run: |
-          echo "${{ toJSON(github.event.changes) }}"
-          echo "${{ toJSON(github.event.changes.base) }}"
-          echo "${{ toJSON(github.event.changes.body) }}"
-          echo "${{ toJSON(github.event.changes.title) }}"
     
       - name: Skip
         if: contains(github.event.pull_request.body, format('- [x] {0}', 'deploy'))
@@ -32,30 +25,28 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const pr_body = `<details><summary>Test</summary>
-
-            <details><summary>Apps</summary>
-            
-            - [ ] app1
-            - [ ] app2
-            
-            </details>
-            
-            <details><summary>Environments</summary>
-            
-            - [ ] env1
-            - [ ] env2
-            
-            </details>
-            
-            <details><summary>Command</summary>
-            
-            - [ ] command1
-            - [ ] command2
-            
-            </details>
-            
-            </details>`
+            const pr_body = `<details><summary>Test</summary><ul>
+              <details><summary>app 1</summary> <ul> 
+              <details><summary>env1</summary> <ul>
+              <li>test</li>
+              <li>test</li>
+              </ul></details><!-- env1 -->
+              <details><summary>env2</summary> <ul>
+              <li>test</li>
+              <li>test</li>
+              </ul></details><!-- env2 -->
+              </ul></details>
+              <details><summary>app 2</summary> <ul> 
+              <details><summary>env1</summary> <ul>
+              <li>test</li>
+              <li>test</li>
+              </ul></details><!-- env1 -->
+              <details><summary>env2</summary> <ul>
+              <li>test</li>
+              <li>test</li>
+              </ul></details><!-- env2 -->
+              </ul></details>
+              </details>`
             
             github.rest.pulls.update({
               owner: context.repo.owner,
@@ -75,7 +66,4 @@ jobs:
             console.log(res);
             const changes = context.payload.changes;
             console.log(changes);
-    
-      - name: Body
-        run: echo "${{ toJSON(github.event.pull_request.body) }}"
 
