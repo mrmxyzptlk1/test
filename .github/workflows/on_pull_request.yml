@@ -15,15 +15,11 @@ jobs:
         with:
           filters: |
             folder1:
-              - folder1/**
-              - folder3/**
               - folder1/!(tests)/**
               - folder3/!(tests)/**
               - folder4/**
               - folder5/**
             folder2:
-              - folder2/**
-              - folder3/**
               - folder2/!(tests)/**
               - folder3/!(tests)/**
               - folder4/**
