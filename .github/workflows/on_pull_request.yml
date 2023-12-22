@@ -2,68 +2,29 @@ name: "Pull request"
 
 on:
   pull_request:
-    types: [ edited ]
+    types: [ synchronize ]
 
 jobs:
   job1:
     name: Job1
     runs-on: ubuntu-latest
     steps:
-      - name: If PR body change
-        if: toJSON(github.event.changes.body || null) != 'null'
-        run: echo "test"
-
-      - name: If PR title change
-        if: toJSON(github.event.changes.title || null) != 'null'
-        run: echo "test"
-    
-      - name: Skip
-        if: contains(github.event.pull_request.body, format('- [x] {0}', 'deploy'))
-        run: echo "test"
-    
-      - name: Check comment
-        uses: actions/github-script@v6
+      - name: Check
+        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
+        id: filter
         with:
-          script: |
-            const pr_body = `<details><summary>Test</summary><ul>
-              <details><summary>app 1</summary> <ul> 
-              <details><summary>env1</summary> <ul>
-              <li>test</li>
-              <li>test</li>
-              </ul></details><!-- env1 -->
-              <details><summary>env2</summary> <ul>
-              <li>test</li>
-              <li>test</li>
-              </ul></details><!-- env2 -->
-              </ul></details>
-              <details><summary>app 2</summary> <ul> 
-              <details><summary>env1</summary> <ul>
-              <li>test</li>
-              <li>test</li>
-              </ul></details><!-- env1 -->
-              <details><summary>env2</summary> <ul>
-              <li>test</li>
-              <li>test</li>
-              </ul></details><!-- env2 -->
-              </ul></details>
-              </details>`
-            
-            github.rest.pulls.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number,
-              body: pr_body
-            });
-    
-      - name: Check comment
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const comment = `context.payload.pull_request.body`;
-            console.log(comment);
-            console.log("next");
-            res = comment.match(/^(- [x])$/mg);
-            console.log(res);
-            const changes = context.payload.changes;
-            console.log(changes);
-
+          filters: |
+            folder1:
+              - folder1/**
+              - folder3/**
+              - folder1/!(tests)/**
+              - folder3/!(tests)/**
+              - folder4/**
+              - folder5/**
+            folder2:
+              - folder2/**
+              - folder3/**
+              - folder2/!(tests)/**
+              - folder3/!(tests)/**
+              - folder4/**
+              - folder5/**
