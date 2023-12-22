@@ -12,6 +12,6 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const test = ${{ '[]' != '[]' && 0 || 'test' }};
+            const test = ${{ '[]' != '[]' && 0 || 1 }};
             console.log(test);
             console.log(typeof test);
