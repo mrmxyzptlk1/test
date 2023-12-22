@@ -9,18 +9,9 @@ jobs:
     name: Job1
     runs-on: ubuntu-latest
     steps:
-      - name: Check
-        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
-        id: filter
+      - uses: actions/github-script@v6
         with:
-          filters: |
-            folder1:
-              - folder1/!(tests)/**
-              - folder3/!(tests)/**
-              - folder4/**
-              - folder5/**
-            folder2:
-              - folder2/!(tests)/**
-              - folder3/!(tests)/**
-              - folder4/**
-              - folder5/**
+          script: |
+            const test = ${{ '[test]' != '[]' && 0 || 0 }};
+            console.log(test);
+            console.log(typeof test);
